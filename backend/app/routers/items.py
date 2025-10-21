@@ -1,7 +1,13 @@
 from fastapi import APIRouter, status
 from typing import List
+
+# Uncomment below when testing with PyTest
+# from backend.app.schemas.item import Item, ItemCreate, ItemUpdate
+# from backend.app.services.items_service import list_items, create_item, delete_item, update_item
+
+# Uncomment below when running FastAPI
 from schemas.item import Item, ItemCreate, ItemUpdate
-from services.items_service import list_items, create_item, delete_item, update_item
+from services.items_service import list_items, create_item, delete_item, update_item, get_item_by_id
 
 router = APIRouter(prefix="/items", tags=["items"])
 
@@ -13,8 +19,6 @@ def get_items():
 @router.post("", response_model=Item, status_code=201)
 def post_item(payload: ItemCreate):
     return create_item(payload)
-
-from services.items_service import list_items, create_item, get_item_by_id
 
 @router.get("/{item_id}", response_model=Item)
 def get_item(item_id: str):

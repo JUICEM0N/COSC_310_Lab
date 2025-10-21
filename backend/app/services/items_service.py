@@ -1,6 +1,12 @@
 import uuid
 from typing import List, Dict, Any
 from fastapi import HTTPException
+
+# Uncomment below when testing with PyTest
+# from backend.app.schemas.item import Item, ItemCreate, ItemUpdate
+# from backend.app.repositories.items_repo import load_all, save_all
+
+# Uncomment below when running FastAPI
 from schemas.item import Item, ItemCreate, ItemUpdate
 from repositories.items_repo import load_all, save_all
 
