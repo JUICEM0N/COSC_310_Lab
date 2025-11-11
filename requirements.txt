@@ -1,0 +1,4 @@
+pylint
+fastapi[standard]
+httpx
+pytest
