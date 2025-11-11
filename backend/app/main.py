@@ -4,9 +4,15 @@ from fastapi import FastAPI
 # from backend.app.routers.items import router as items_router
 
 # Uncomment below when running FastAPI
-from routers.items import router as items_router
+# from app.routers import router as items_router
+from routers import users, items, cart, user_dashboard
 
 app = FastAPI()
+
+app.include_router(users.router)
+app.include_router(items.router)
+app.include_router(cart.router)
+app.include_router(user_dashboard.router)
 
 @app.get("/health")
 def health():
@@ -16,4 +22,3 @@ def health():
 def root():
     return {"msg": "Hello World"}
 
-app.include_router(items_router)

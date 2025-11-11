@@ -20,3 +20,7 @@ class UserUpdate(BaseModel):
     password: str
     email: str
     isAdmin: bool
+
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str
