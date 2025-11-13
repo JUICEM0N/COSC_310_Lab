@@ -6,13 +6,16 @@ class Penalty(BaseModel):
     user_id: int
     reason: str
     amount: float
+    status: str
     date_issued: datetime.datetime
 
 class PenaltyCreate(BaseModel):
     user_id: int
     reason: str
     amount: float
+    status: str
 
 class PenaltyUpdate(BaseModel):
     reason: str
     amount: float
+    status: str
