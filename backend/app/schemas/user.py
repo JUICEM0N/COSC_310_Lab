@@ -6,14 +6,27 @@ class User(BaseModel):
     username: str
     password: str
     email: str
-    isAdmin: bool
+    isAdmin: bool = False
     createdAt: datetime.datetime
+
+    class Config:
+        from_attributes = True
 
 class UserCreate(BaseModel):
     username: str
     password: str
     email: str
+    isAdmin: bool = False
+
+class UserOut(BaseModel):
+    user_id: int
+    username: str
+    email: str
     isAdmin: bool
+    createdAt: datetime
+
+    class Config:
+        from_attributes = True
 
 class UserUpdate(BaseModel):
     username: str
