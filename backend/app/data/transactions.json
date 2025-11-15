@@ -3,16 +3,34 @@
         "user_id": 1,
         "products": [
             {
-                "product_id": "B07JW9H4J1",
-                "quantity": 2
+                "product_id": "B09HS1NDRQ",
+                "name": "PrettyKrafts Laundry Square Shape Basket Bag/Foldable/Multipurpose/Carry Handles/Slanting Lid for Home, Cloth Storage,(Single) Jute Grey",
+                "quantity": 2,
+                "price_per_unit": 6.24,
+                "subtotal": 12.48,
+                "actual_price": 12.78,
+                "discount": "51%",
+                "category": "Home&Kitchen|HomeStorage&Organization|LaundryOrganization|LaundryBaskets",
+                "rating": "3.8",
+                "rating_count": "287",
+                "image": "https://m.media-amazon.com/images/I/416VJv+z7CL._SY300_SX300_.jpg"
             },
             {
-                "product_id": "202",
-                "quantity": 1
+                "product_id": "B09FPP3R1D",
+                "name": "Glen 3 in 1 Electric Multi Cooker - Steam, Cook & Egg Boiler with 350 W (SA 3035MC) - 350 Watts",
+                "quantity": 1,
+                "price_per_unit": 25.98,
+                "subtotal": 25.98,
+                "actual_price": 39.92,
+                "discount": "35%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|EggBoilers",
+                "rating": "4.1",
+                "rating_count": "827",
+                "image": "https://m.media-amazon.com/images/I/31afXBXOUVL._SX300_SY300_QL70_FMwebp_.jpg"
             }
         ],
-        "total_amount": 75.00,
-        "date": "2024-10-05",
+        "total_amount": 43.08,
+        "date": "2025-11-15",
         "status": "completed"
     }
 ]

@@ -15,3 +15,9 @@ def save_all(items: List[Dict[str, Any]]) -> None:
     with tmp.open("w", encoding="utf-8") as f:
         json.dump(items, f, ensure_ascii=False, indent=2)
     os.replace(tmp, DATA_PATH)
+
+
+""" 
+    This file can probably be deleted. This was from the oriignal demo, and I don't
+    think is is even used anywhere. Instead we are using products_repo 
+"""

@@ -1,9 +1,8 @@
 from bcrypt import hashpw, checkpw, gensalt
 from datetime import datetime
-from app.repositories.users_repo import *
-from app.schemas.user import User, UserCreate
+from repositories.users_repo import *
+from schemas.user import User, UserCreate
 from typing import Optional
-
 
 class AuthService:
     def create_user(self, user_data: UserCreate) -> User:
