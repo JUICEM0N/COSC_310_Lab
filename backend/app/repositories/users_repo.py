@@ -30,6 +30,13 @@ def get_user_by_email(email: str):
             return user
     return None
 
+def get_user_by_username(username: str):
+    users = load_users()
+    for user in users:
+        if user["username"] == username:
+            return user
+    return None
+
 def add_user(user_data: dict):
     users = load_users()
     users.append(user_data)
