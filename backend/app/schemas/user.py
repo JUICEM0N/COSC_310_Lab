@@ -30,7 +30,6 @@ class UserOut(BaseModel):
 
 class UserUpdate(BaseModel):
     username: str
-    password: str
     email: str
     isAdmin: bool
 

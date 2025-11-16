@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from app.services.auth_service import AuthService
-from app.schemas.user import UserCreate, UserOut
+from app.schemas.user import UserCreate, UserOut, ChangePassword
 
 router = APIRouter(prefix = "/auth", tags = ["Authentication"])
 
@@ -17,3 +17,7 @@ def login(username: str, password: str):
     if not user:
         raise HTTPException(status_code = 401, detail = "Incorrect email or password")
     return user
+
+@router.patch("/change-password/{user_id}", status_code = status.HTTP_204_NO_CONTENT)
+def change_password(user_id: int, payload: ChangePassword):
+    AuthService().change_password(user_id, payload.old_password, payload.new_password)
