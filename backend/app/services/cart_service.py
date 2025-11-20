@@ -1,5 +1,5 @@
-from repositories.cart_repo import CartRepo
-from repositories.products_repo import ProductsRepo
+from backend.app.repositories.cart_repo import CartRepo
+from backend.app.repositories.products_repo import ProductsRepo
 
 class CartService:
     

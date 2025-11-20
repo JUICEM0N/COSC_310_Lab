@@ -1,11 +1,5 @@
 from fastapi import FastAPI
-
-# Uncomment below when testing with PyTest
-# from backend.app.routers.items import router as items_router
-
-# Uncomment below when running FastAPI
-# from app.routers import router as items_router
-from routers import users, items, cart, user_dashboard, auth, transactions
+from backend.app.routers import users, items, cart, user_dashboard, auth, transactions
 
 app = FastAPI()
 

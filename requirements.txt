@@ -2,3 +2,5 @@ pylint
 fastapi[standard]
 httpx
 pytest
+pytest-cov
+bcrypt

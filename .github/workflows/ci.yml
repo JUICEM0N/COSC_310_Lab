@@ -1,0 +1,58 @@
+name: StackSquad Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches: ["main", "dev", "*"]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
+
+    - name: Create testing-documents folders
+      run: |
+        mkdir -p testing-documents
+        mkdir -p testing-documents/coverage
+        mkdir -p testing-documents/unit-tests
+        mkdir -p testing-documents/integration-tests
+
+    - name: Generate timestamp
+      id: time
+      run: echo "tstamp=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_OUTPUT
+
+    - name: Run Unit Tests With Coverage
+      run: |
+        pytest backend/test/unit \
+          --maxfail=3 \
+          --disable-warnings \
+          --cov=backend/app \
+          --cov-report=xml:testing-documents/coverage/coverage-${{ steps.time.outputs.tstamp }}.xml \
+          --cov-report=term-missing \
+        | tee testing-documents/unit-tests/unit-results-${{ steps.time.outputs.tstamp }}.txt
+
+    - name: Run Integration Tests
+      run: |
+        pytest backend/test/integration \
+          --maxfail=3 \
+          --disable-warnings \
+        | tee testing-documents/integration-tests/integration-results-${{ steps.time.outputs.tstamp }}.txt
+
+    - name: Upload testing-documents folder
+      uses: actions/upload-artifact@v3
+      with:
+        name: testing-documents
+        path: testing-documents

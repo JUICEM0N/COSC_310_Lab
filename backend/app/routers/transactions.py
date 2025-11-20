@@ -1,6 +1,5 @@
 from fastapi import APIRouter
-from services.transactions_service import TransactionsService
-
+from backend.app.services.transactions_service import TransactionsService
 
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
 

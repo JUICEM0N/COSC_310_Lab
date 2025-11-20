@@ -7,7 +7,7 @@ class User(BaseModel):
     password: str
     email: str
     isAdmin: bool = False
-    createdAt: datetime
+    createdAt: str
 
     class Config:
         from_attributes = True

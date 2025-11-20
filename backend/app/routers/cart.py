@@ -1,11 +1,5 @@
 from fastapi import APIRouter, HTTPException
-
-# Uncomment below when testing with PyTest
-# from backend.app.schemas.cart import CartItem, Cart
-# from backend.app.services.cart_service import get_cart_by_user, get_cart_items, add_cart_item, update_cart_item, remove_cart_item
-
-# Uncomment below when running FastAPI
-from repositories.cart_repo import CartRepo
+from backend.app.repositories.cart_repo import CartRepo
 
 router = APIRouter(prefix="/cart", tags=["cart"])
 

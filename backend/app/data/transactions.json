@@ -32,5 +32,47 @@
         "total_amount": 43.08,
         "date": "2025-11-15",
         "status": "completed"
+    },
+    {
+        "user_id": 2,
+        "products": [
+            {
+                "product_id": "B0BP89YBC1",
+                "name": "Campfire Spring Chef Prolix Instant Portable Water Heater Geyser 1Ltr. for Use Home Stainless Steel Baking Rack | Restaurant | Office | Labs | Clinics | Saloon | with Installation Kit (With MCB)",
+                "quantity": 5,
+                "price_per_unit": 23.98,
+                "subtotal": 119.9,
+                "actual_price": 56.0,
+                "discount": "57%",
+                "category": "Home&Kitchen|Heating,Cooling&AirQuality|WaterHeaters&Geysers|InstantWaterHeaters",
+                "rating": "4.7",
+                "rating_count": "2,591",
+                "image": "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/41hoHTbN5rL._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "total_amount": 134.29,
+        "date": "2025-11-17",
+        "status": "completed"
+    },
+    {
+        "user_id": 2,
+        "products": [
+            {
+                "product_id": "B07J9KXQCC",
+                "name": "Libra Room Heater for Home, Room Heaters Home for Winter, Electric Heater with 2000 Watts Power as per IS Specification for Small to Medium Rooms - FH12 (Grey)",
+                "quantity": 5,
+                "price_per_unit": 15.18,
+                "subtotal": 75.9,
+                "actual_price": 36.78,
+                "discount": "59%",
+                "category": "Home&Kitchen|Heating,Cooling&AirQuality|RoomHeaters|ElectricHeaters",
+                "rating": "3.6",
+                "rating_count": "550",
+                "image": "https://m.media-amazon.com/images/I/51GEjZAmNRL._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "total_amount": 85.01,
+        "date": "2025-11-19",
+        "status": "completed"
     }
 ]

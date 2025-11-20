@@ -1,7 +1,7 @@
-from repositories.products_repo import ProductsRepo
-from repositories.cart_repo import CartRepo
-from repositories.transactions_repo import TransactionsRepo
 from datetime import date
+from backend.app.repositories.products_repo import ProductsRepo
+from backend.app.repositories.cart_repo import CartRepo
+from backend.app.repositories.transactions_repo import TransactionsRepo
 
 TAX_RATE = 0.12
 
