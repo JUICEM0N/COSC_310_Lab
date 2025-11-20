@@ -17,7 +17,7 @@ class CartService:
         CartRepo.add_item(user_id, product_id, quantity)
 
     def update_quantity(user_id: int, product_id: str, quantity: int):
-        product = ProductsRepo.get_products(product_id)
+        product = ProductsRepo.get_product(product_id)
         
         if not product:
             raise ValueError(f"Product does not exist: {product_id}")
@@ -28,4 +28,4 @@ class CartService:
         CartRepo.remove_item(user_id, product_id)
 
     def clear_cart(user_id: int):
-        CartRepo.cleart_cart(user_id)
+        CartRepo.clear_cart(user_id)

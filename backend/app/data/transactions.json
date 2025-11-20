@@ -74,5 +74,54 @@
         "total_amount": 85.01,
         "date": "2025-11-19",
         "status": "completed"
+    },
+    {
+        "user_id": 1,
+        "products": [],
+        "total_amount": 0.0,
+        "date": "2025-11-20",
+        "status": "completed"
+    },
+    {
+        "user_id": 1,
+        "products": [],
+        "total_amount": 0.0,
+        "date": "2025-11-20",
+        "status": "completed"
+    },
+    {
+        "user_id": 1,
+        "products": [],
+        "total_amount": 0.0,
+        "date": "2025-11-20",
+        "status": "completed"
+    },
+    {
+        "user_id": 1,
+        "products": [],
+        "total_amount": 0.0,
+        "date": "2025-11-20",
+        "status": "completed"
+    },
+    {
+        "user_id": 1,
+        "products": [],
+        "total_amount": 0.0,
+        "date": "2025-11-20",
+        "status": "completed"
+    },
+    {
+        "user_id": 1,
+        "products": [],
+        "total_amount": 0.0,
+        "date": "2025-11-20",
+        "status": "completed"
+    },
+    {
+        "user_id": 1,
+        "products": [],
+        "total_amount": 0.0,
+        "date": "2025-11-20",
+        "status": "completed"
     }
 ]

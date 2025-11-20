@@ -21,7 +21,7 @@ class TransactionsService:
             product_id = item["product_id"]
             quantity = item["quantity"]
 
-            product = ProductsRepo.get_product(product_id)
+            product = ProductsRepo.get_products(product_id)
             if not product:
                 continue
             

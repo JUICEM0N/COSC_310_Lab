@@ -1,5 +1,8 @@
 from fastapi import FastAPI
-from backend.app.routers import users, items, cart, user_dashboard, auth, transactions
+from backend.app.routers import (
+    users, items, cart, user_dashboard, auth,
+    transactions, admin, admin_dashboard
+)
 
 app = FastAPI()
 
@@ -9,6 +12,8 @@ app.include_router(cart.router)
 app.include_router(user_dashboard.router)
 app.include_router(auth.router)
 app.include_router(transactions.router)
+app.include_router(admin.router)
+app.include_router(admin_dashboard.router)
 
 @app.get("/health")
 def health():

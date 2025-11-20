@@ -10,7 +10,7 @@ class ProductsRepo:
         with open(DATA_PATH, "r") as f:
             return json.load(f)
         
-    def get_product(product_id: str):
+    def get_products(product_id: str):
         products = ProductsRepo.load_products()
         return next((p for p in products if p["product_id"] == product_id), None)
     
