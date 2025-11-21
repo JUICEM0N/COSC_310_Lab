@@ -14,5 +14,13 @@
         "email": "email@email.com",
         "isAdmin": false,
         "createdAt": "date-time"
+    },
+    {
+        "user_id": 3,
+        "username": "jonah",
+        "password": "$2b$12$BmP4lWbqyqZCox2HD69fAeGBscLurL44qCwp6II7.ek6cdWJo4RlO",
+        "email": "jpriver1@hotmail.com",
+        "isAdmin": true,
+        "createdAt": "2025-11-21T15:07:29.899928"
     }
 ]
