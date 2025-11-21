@@ -1,5 +1,4 @@
 from fastapi import APIRouter, HTTPException, status
-
 from backend.app.services.auth_service import AuthService
 from backend.app.schemas.user import UserCreate, UserOut, ChangePassword
 

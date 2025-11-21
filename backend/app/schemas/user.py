@@ -1,4 +1,5 @@
 from pydantic import BaseModel, StrictBool
+from typing import Optional
 from datetime import datetime
 
 class User(BaseModel):
@@ -7,7 +8,7 @@ class User(BaseModel):
     password: str
     email: str
     isAdmin: StrictBool = False
-    createdAt: datetime
+    createdAt: str = None
 
     class Config:
         from_attributes = True
@@ -23,7 +24,7 @@ class UserOut(BaseModel):
     username: str
     email: str
     isAdmin: StrictBool
-    createdAt: datetime
+    createdAt: str
 
     class Config:
         from_attributes = True

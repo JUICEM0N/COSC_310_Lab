@@ -21,7 +21,7 @@ class UsersRepo:
     def get_user_by_id(user_id: int):
         users = UsersRepo.load_users()
         for user in users:
-            if user["id"] == user_id:
+            if user["user_id"] == user_id:
                 return user
         return None
 
@@ -47,7 +47,7 @@ class UsersRepo:
     def update_user(user_id: int, updated_data: dict):
         users = UsersRepo.load_users()
         for i, user in enumerate(users):
-            if user["id"] == user_id:
+            if user["user_id"] == user_id:
                 users[i].update(updated_data)
                 UsersRepo.save_users(users)
                 return users[i]
@@ -55,6 +55,6 @@ class UsersRepo:
 
     def delete_user(user_id: int):
         users = UsersRepo.load_users()
-        new_users = [u for u in users if u["id"] != user_id]
+        new_users = [u for u in users if u["user_id"] != user_id]
         UsersRepo.save_users(new_users)
         return len(new_users) < len(users)

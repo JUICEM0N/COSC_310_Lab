@@ -17,7 +17,7 @@ class AuthService:
             password=hashed,
             email=user_data.email,
             isAdmin=user_data.isAdmin,
-            createdAt=datetime.now()
+            createdAt=datetime.now().isoformat()
         )
 
         UsersRepo.add_user(new_user.model_dump())
@@ -37,3 +37,4 @@ class AuthService:
             raise ValueError("Incorrect password")
         new_hashed = hashpw(new_password.encode('utf-8'), gensalt()).decode('utf-8')
         UsersRepo.update_user(user_id, {"password": new_hashed})
+
