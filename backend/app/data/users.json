@@ -1,16 +1,18 @@
 [
     {
-        "id": 1,
-        "username": "Admin",
-        "password": "securepassword123",
-        "email": "email@email.com",
-        "isAdmin": true
+        "user_id": 1,
+        "username": "admin",
+        "password": "pass",
+        "email": "admin@email.com",
+        "isAdmin": true,
+        "createdAt": "date-time"
     },
     {
-        "id": 2,
-        "username": "sebcsiz",
-        "password": "pass",
+        "user_id": 2,
+        "username": "sebcs",
+        "password": "password",
         "email": "email@email.com",
-        "isAdmin": false
-        }
+        "isAdmin": false,
+        "createdAt": "date-time"
+    }
 ]

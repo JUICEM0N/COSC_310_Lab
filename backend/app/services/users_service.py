@@ -1,32 +1,34 @@
-from repositories.users_repo import get_user_by_id, load_users, save_users
+from backend.app.repositories.users_repo import UsersRepo
 
-def get_user_info(user_id: int):
-    user = get_user_by_id(user_id)
-    if not user:
-        return None
-    return user
+class UsersService:
 
-def update_user(user_id, updated_data):
-    users = load_users()
+    def get_user_info(user_id: int):
+        user = UsersRepo.get_user_by_id(user_id)
+        if not user:
+            return None
+        return user
 
-    user = next((u for u in users if u["id"] == user_id), None)
-    if not user:
-        return None
+    def update_user(user_id, updated_data):
+        users = UsersRepo.load_users()
 
-    for key, value in updated_data.items():
-        if key in user:
-            user[key] = value
+        user = next((u for u in users if u["id"] == user_id), None)
+        if not user:
+            return None
 
-    save_users(users)
-    return user
+        for key, value in updated_data.items():
+            if key in user:
+                user[key] = value
 
-def change_user_password(user_id, old_password, new_password):
-    users = load_users()
+        UsersRepo.save_users(users)
+        return user
 
-    user = next((u for u in users if u["id"] == user_id), None)
-    if not user or user.get("password") != old_password:
-        return False
+    def change_user_password(user_id, old_password, new_password):
+        users = UsersRepo.load_users()
 
-    user["password"] = new_password
-    save_users(users)
-    return True
+        user = next((u for u in users if u["id"] == user_id), None)
+        if not user or user.get("password") != old_password:
+            return False
+
+        user["password"] = new_password
+        UsersRepo.save_users(users)
+        return True

@@ -1,18 +1,13 @@
 from fastapi import APIRouter, HTTPException
-
-# Uncomment below when testing with PyTest
-# from backend.app.services.user_dashboard_service import get_user_dashboard
-
-# Uncomment below when running FastAPI
-from services.user_dashboard_service import get_user_dashboard
+from backend.app.services.user_dashboard_service import UserDashboardService
 
 router = APIRouter(prefix="/user_dashboard", tags=["User Dashboard"])
 
-""" Get's dashboard info for a specific user based on user_id"""
+""" Gets dashboard info for a specific user based on user_id"""
 @router.get("/{user_id}")
 def get_dashboard(user_id: int):
     try:
-        dashboard_data = get_user_dashboard(user_id)
+        dashboard_data = UserDashboardService.get_user_dashboard(user_id)
         if not dashboard_data["transactions"] and not dashboard_data["penalties"]:
             return {"message": f"No data found for user {user_id}"}
         return {

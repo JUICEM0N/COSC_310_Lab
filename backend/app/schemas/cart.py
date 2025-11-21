@@ -12,7 +12,8 @@ class Cart(BaseModel):
     items: list[CartItem]
     total_price: float
 
-class CartCretae(BaseModel):
+# Delete below, same thing as Cart?
+class CartCreate(BaseModel):
     items: list[CartItem]
     total_price: float
 
