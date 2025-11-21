@@ -1,7 +1,7 @@
 from bcrypt import hashpw, checkpw, gensalt
 from datetime import datetime
-from app.repositories.users_repo import *
-from app.schemas.user import User, UserCreate
+from backend.app.repositories.users_repo import *
+from backend.app.schemas.user import User, UserCreate
 from typing import Optional
 
 
@@ -18,7 +18,7 @@ class AuthService:
             password=hashed,
             email=user_data.email,
             isAdmin=user_data.isAdmin,
-            createdAt=datetime.now()
+            createdAt=datetime.now().isoformat()
         )
 
         add_user(new_user.model_dump())
@@ -29,3 +29,12 @@ class AuthService:
         if user_dict and checkpw(password.encode('utf-8'), user_dict["password"].encode('utf-8')):
             return User(**user_dict)
         return None
+    
+    def change_password(self, user_id: int, old_password: str, new_password: str):
+        user_dict = get_user_by_id(user_id)
+        if not user_dict:
+            raise ValueError("User not found")
+        if not checkpw(old_password.encode('utf-8'), user_dict["password"].encode('utf-8')):
+            raise ValueError("Incorrect password")
+        new_hashed = hashpw(new_password.encode('utf-8'), gensalt()).decode('utf-8')
+        update_user(user_id, {"password": new_hashed})

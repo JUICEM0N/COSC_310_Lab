@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-import datetime
+from typing import Optional
+from datetime import datetime
 
 class User(BaseModel):
     user_id: int
@@ -7,7 +8,7 @@ class User(BaseModel):
     password: str
     email: str
     isAdmin: bool = False
-    createdAt: datetime.datetime
+    createdAt: str =  None
 
     class Config:
         from_attributes = True
@@ -23,14 +24,13 @@ class UserOut(BaseModel):
     username: str
     email: str
     isAdmin: bool
-    createdAt: datetime
+    createdAt: str
 
     class Config:
         from_attributes = True
 
 class UserUpdate(BaseModel):
     username: str
-    password: str
     email: str
     isAdmin: bool
 

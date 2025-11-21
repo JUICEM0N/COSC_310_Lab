@@ -19,7 +19,7 @@ def get_all_users():
 def get_user_by_id(user_id: int):
     users = load_users()
     for user in users:
-        if user["id"] == user_id:
+        if user["user_id"] == user_id:
             return user
     return None
 
@@ -45,7 +45,7 @@ def add_user(user_data: dict):
 def update_user(user_id: int, updated_data: dict):
     users = load_users()
     for i, user in enumerate(users):
-        if user["id"] == user_id:
+        if user["user_id"] == user_id:
             users[i].update(updated_data)
             save_users(users)
             return users[i]
@@ -53,6 +53,6 @@ def update_user(user_id: int, updated_data: dict):
 
 def delete_user(user_id: int):
     users = load_users()
-    new_users = [u for u in users if u["id"] != user_id]
+    new_users = [u for u in users if u["user_id"] != user_id]
     save_users(new_users)
     return len(new_users) < len(users)
