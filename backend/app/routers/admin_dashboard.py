@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app.services.admin_service import AdminService
-from app.services.users_service import get_user_info
-from app.repositories.users_repo import load_users
-from app.repositories.transactions_repo import get_transactions_by_user
-from app.repositories.penalties_repo import get_penalties_by_user
+from backend.app.services.admin_service import AdminService
+from backend.app.services.users_service import UsersService
+from backend.app.repositories.users_repo import UsersRepo
+from backend.app.repositories.transactions_repo import TransactionsRepo
+from backend.app.repositories.penalties_repo import PenaltiesRepo
 
 router = APIRouter(prefix="/admin_dashboard", tags=["Admin Dashboard"])
 service = AdminService()
 #requires admin
-def require_admin(user=Depends(get_user_info)):
+def require_admin(user=Depends(UsersService.get_user_info)):
     if not user.get("isAdmin", False):
         raise HTTPException(status_code=403, detail="Admin access required")
     return user
@@ -16,7 +16,7 @@ def require_admin(user=Depends(get_user_info)):
 #gets a overview of all users
 @router.get("/users")
 def get_all_users(admin=Depends(require_admin)):
-    users = load_users()
+    users = UsersRepo.load_users()
     if not users:
         return {"message": "No users found"}
     return {
@@ -27,14 +27,14 @@ def get_all_users(admin=Depends(require_admin)):
 #gets the dashboard of a specific user
 @router.get("/user/{user_id}")
 def get_user_details(user_id: int, admin=Depends(require_admin)):
-    users = load_users()
+    users = UsersRepo.load_users()
     user = next((u for u in users if u["id"] == user_id), None)
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    transactions = get_transactions_by_user(user_id)
-    penalties = get_penalties_by_user(user_id)
+    transactions = TransactionsRepo.get_transactions_by_user(user_id)
+    penalties = PenaltiesRepo.get_penalties_by_user(user_id)
 
     return {
         "message": f"Dashboard for user {user_id}",
@@ -46,7 +46,7 @@ def get_user_details(user_id: int, admin=Depends(require_admin)):
 
 @router.get("/summary")
 def admin_summary(admin=Depends(require_admin)):
-    users = load_users()
+    users = UsersRepo.load_users()
 
     #gather global data
     all_transactions = []
@@ -54,8 +54,8 @@ def admin_summary(admin=Depends(require_admin)):
 
     for user in users:
         uid = user["id"]
-        all_transactions.extend(get_transactions_by_user(uid))
-        all_penalties.extend(get_penalties_by_user(uid))
+        all_transactions.extend(TransactionsRepo.get_transactions_by_user(uid))
+        all_penalties.extend(PenaltiesRepo.get_penalties_by_user(uid))
 
     #sort latest items
     all_transactions_sorted = sorted(

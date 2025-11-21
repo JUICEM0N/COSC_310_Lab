@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
-from app.services.auth_service import AuthService
-from app.schemas.user import UserCreate, UserOut, ChangePassword
+
+from backend.app.services.auth_service import AuthService
+from backend.app.schemas.user import UserCreate, UserOut, ChangePassword
 
 router = APIRouter(prefix = "/auth", tags = ["Authentication"])
 

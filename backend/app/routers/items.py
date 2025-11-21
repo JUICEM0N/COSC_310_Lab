@@ -1,37 +1,31 @@
 from fastapi import APIRouter, status
 from typing import List
+from backend.app.schemas.item import Item, ItemCreate, ItemUpdate
+from backend.app.services.items_service import ItemsService
 
-# Uncomment below when testing with PyTest
-# from backend.app.schemas.item import Item, ItemCreate, ItemUpdate
-# from backend.app.services.items_service import list_items, create_item, delete_item, update_item
-
-# Uncomment below when running FastAPI
-from schemas.item import Item, ItemCreate, ItemUpdate
-from services.items_service import list_items, create_item, delete_item, update_item, get_item_by_id
-
-router = APIRouter(prefix="/items", tags=["items"])
+router = APIRouter(prefix="/items", tags=["Items"])
 
 @router.get("", response_model=List[Item])
 def get_items():
-    return list_items()
+    return ItemsService.list_items()
 
 #simple post the payload (is the body of the request)
 @router.post("", response_model=Item, status_code=201)
 def post_item(payload: ItemCreate):
-    return create_item(payload)
+    return ItemsService.create_item(payload)
 
 @router.get("/{item_id}", response_model=Item)
 def get_item(item_id: str):
-    return get_item_by_id(item_id)
+    return ItemsService.get_item_by_id(item_id)
 
 ## We use put here because we are not creating an entirely new item, ie. we keep id the same
 @router.put("/{item_id}", response_model=Item)
 def put_item(item_id: str, payload: ItemUpdate):
-    return update_item(item_id, payload)
+    return ItemsService.update_item(item_id, payload)
 
 
 ## we put the status there becuase in a delete, we wont have a return so it indicates it happened succesfully
 @router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
 def remove_item(item_id: str):
-    delete_item(item_id)
+    ItemsService.delete_item(item_id)
     return None

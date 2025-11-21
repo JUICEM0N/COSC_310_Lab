@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from app.repositories.admin_repo import AdminRepository
+from backend.app.repositories.admin_repo import AdminRepository
 
 repo = AdminRepository()
 

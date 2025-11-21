@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app.schemas.penalty import PenaltyCreate
-from app.services.admin_service import AdminService
-from app.services.users_service import get_user_info
+from backend.app.schemas.penalty import PenaltyCreate
+from backend.app.services.admin_service import AdminService
+from backend.app.services.users_service import UsersService
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 service = AdminService()
 
-def require_admin(user = Depends(get_user_info)):
+def require_admin(user = Depends(UsersService.get_user_info)):
     if not user.get("isAdmin", False):
         raise HTTPException(status_code=403, detail="Admin access required")
     return user

@@ -1,9 +1,31 @@
-from typing import Dict, Optional
-from schemas.cart import CartItem, Cart
-from datetime import datetime
+from backend.app.repositories.cart_repo import CartRepo
+from backend.app.repositories.products_repo import ProductsRepo
 
-# In-memory storage for carts since we are not usign a DB
-user_carts: Dict[str, Cart] = {}
+class CartService:
+    
+    def get_cart(user_id: int):
+        return CartRepo.get_cart(user_id)
+    
+    def add_item(user_id: int, product_id: str, quantity: int = 1):
+        product = ProductsRepo.get_product(product_id)
 
-def get_cart_by_user(user_id: str) -> Optional[Cart]:
-    return user_carts.get(user_id)
+        if not product:
+            raise ValueError(f"Product does not exist: {product_id}")
+        if quantity <= 0:
+            raise ValueError("Quantity must be greater than 0")
+        
+        CartRepo.add_item(user_id, product_id, quantity)
+
+    def update_quantity(user_id: int, product_id: str, quantity: int):
+        product = ProductsRepo.get_product(product_id)
+        
+        if not product:
+            raise ValueError(f"Product does not exist: {product_id}")
+        
+        CartRepo.update_quantity(user_id, product_id, quantity)
+
+    def remove_item(user_id: int, product_id: str):
+        CartRepo.remove_item(user_id, product_id)
+
+    def clear_cart(user_id: int):
+        CartRepo.clear_cart(user_id)

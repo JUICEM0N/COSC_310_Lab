@@ -1,13 +1,8 @@
 from fastapi import FastAPI
-
-# Uncomment below when testing with PyTest
-# from backend.app.routers.items import router as items_router
-
-# Uncomment below when running FastAPI
-# from app.routers import router as items_router
-from app.routers import users, items, cart, user_dashboard
-from app.routers import auth
-from app.routers import admin, admin_dashboard
+from backend.app.routers import (
+    users, items, cart, user_dashboard, auth,
+    transactions, admin, admin_dashboard
+)
 
 app = FastAPI()
 
@@ -16,6 +11,7 @@ app.include_router(items.router)
 app.include_router(cart.router)
 app.include_router(user_dashboard.router)
 app.include_router(auth.router)
+app.include_router(transactions.router)
 app.include_router(admin.router)
 app.include_router(admin_dashboard.router)
 
