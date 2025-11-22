@@ -25,4 +25,8 @@ def login(payload: LoginRequest):
 
 @router.patch("/change-password/{user_id}", status_code = status.HTTP_204_NO_CONTENT)
 def change_password(user_id: int, payload: ChangePassword):
-    AuthService().change_password(user_id, payload.old_password, payload.new_password)
+    try:
+    
+        AuthService().change_password(user_id, payload.old_password, payload.new_password)
+    except ValueError as e:
+        raise HTTPException(status_code = 400, detail = str(e))
