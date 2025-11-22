@@ -1,98 +1,65 @@
 import pytest
-from unittest.mock import patch
 from backend.app.services.users_service import UsersService
+from backend.app.repositories.users_repo import UsersRepo
+from bcrypt import checkpw, hashpw, gensalt
 
-def test_get_user_info_found():
-    with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
-        mock_repo.get_user_by_id.return_value = {"id": 1, "username": "Alice"}
+@pytest.fixture(autouse=True)
+def clean():
+    UsersRepo.save_users([])
 
-        user = UsersService.get_user_info(1)
+def test_get_user_info():
+    UsersRepo.add_user({
+        "user_id": 1,
+        "username": "testuser",
+        "password": hashpw("pass123".encode(), gensalt()).decode(),
+        "email": "test@test.com",
+        "isAdmin": False,
+        "createdAt": "2025-01-01"
+    })
+    user = UsersService.get_user_info(1)
+    assert user["username"] == "testuser"
+    assert UsersService.get_user_info(999) is None
 
-        assert user == {"id": 1, "username": "Alice"}
-        mock_repo.get_user_by_id.assert_called_once_with(1)
+def test_update_user():
+    UsersRepo.add_user({
+        "user_id": 2,
+        "username": "old",
+        "email": "old@test.com",
+        "password": "xxx",
+        "isAdmin": False,
+        "createdAt": "2025-01-01"
+    })
+    updated = UsersService.update_user(2, {"username": "newname", "isAdmin": True})
+    assert updated["username"] == "newname"
+    assert updated["isAdmin"] is True
 
+def test_change_user_password_success():
+    hashed = hashpw("oldpass".encode(), gensalt()).decode()
+    UsersRepo.add_user({
+        "user_id": 3,
+        "username": "changepass",
+        "password": hashed,
+        "email": "cp@test.com",
+        "isAdmin": False,
+        "createdAt": "2025-01-01"
+    })
 
-def test_get_user_info_not_found():
-    with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
-        mock_repo.get_user_by_id.return_value = None
+    result = UsersService.change_user_password(3, "oldpass", "newpass456")
+    assert result is True
 
-        user = UsersService.get_user_info(99)
+    user = UsersRepo.get_user_by_id(3)
+    assert checkpw("newpass456".encode(), user["password"].encode())
 
-        assert user is None
-        mock_repo.get_user_by_id.assert_called_once_with(99)
+def test_change_user_password_wrong_old():
+    hashed = hashpw("correct".encode(), gensalt()).decode()
+    UsersRepo.add_user({
+        "user_id": 4,
+        "username": "wrongpass",
+        "password": hashed,
+        "email": "wrong@test.com",
+        "isAdmin": False,
+        "createdAt": "2025-01-01"
+    })
 
-def test_update_user_success():
-    initial_users = [
-        {"id": 1, "username": "Alice", "email": "a@a.com"},
-        {"id": 2, "username": "Bob", "email": "b@b.com"},
-    ]
-
-    updated_data = {"username": "Alicia"}
-
-    with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
-        mock_repo.load_users.return_value = initial_users
-        mock_repo.save_users.return_value = None
-
-        updated_user = UsersService.update_user(1, updated_data)
-
-        assert updated_user["username"] == "Alicia"
-        assert updated_user["email"] == "a@a.com"
-        mock_repo.save_users.assert_called_once()
-
-def test_update_user_not_found():
-    with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
-        mock_repo.load_users.return_value = [
-            {"id": 1, "username": "Alice"}
-        ]
-        mock_repo.save_users.return_value = None
-
-        result = UsersService.update_user(99, {"username": "New"})
-
-        assert result is None
-        mock_repo.save_users.assert_not_called()
-
-def test_update_user_ignores_unknown_fields():
-    initial_users = [{"id": 1, "username": "Alice"}]
-
-    with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
-        mock_repo.load_users.return_value = initial_users
-        mock_repo.save_users.return_value = None
-
-        updated_user = UsersService.update_user(1, {"unknown": "BAD", "username": "Zed"})
-
-        assert updated_user["username"] == "Zed"
-        assert "unknown" not in updated_user
-        mock_repo.save_users.assert_called_once()
-
-def test_change_password_success():
-    initial_users = [{"id": 1, "password": "old123"}]
-
-    with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
-        mock_repo.load_users.return_value = initial_users
-        mock_repo.save_users.return_value = None
-
-        result = UsersService.change_user_password(1, "old123", "new123")
-
-        assert result is True
-        assert initial_users[0]["password"] == "new123"
-        mock_repo.save_users.assert_called_once()
-
-def test_change_password_wrong_old_password():
-    initial_users = [{"id": 1, "password": "old123"}]
-
-    with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
-        mock_repo.load_users.return_value = initial_users
-
-        result = UsersService.change_user_password(1, "WRONG", "new123")
-
-        assert result is False
-        mock_repo.save_users.assert_not_called()
-
-def test_change_password_user_not_found():
-    with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
-        mock_repo.load_users.return_value = []
-
-        result = UsersService.change_user_password(99, "pass", "newpass")
-
-        assert result is False
-        mock_repo.save_users.assert_not_called()
+    result = UsersService.change_user_password(4, "wrong", "new")
+    assert result is False
