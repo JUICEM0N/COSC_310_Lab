@@ -76,52 +76,45 @@
         "status": "completed"
     },
     {
-        "user_id": 1,
-        "products": [],
-        "total_amount": 0.0,
-        "date": "2025-11-20",
+        "user_id": 2,
+        "products": [
+            {
+                "product_id": "B09MFR93KS",
+                "name": "Bajaj Rex DLX 750 W 4 Jars Mixer Grinder, White and Blue",
+                "quantity": 5,
+                "price_per_unit": 48.67,
+                "subtotal": 243.35000000000002,
+                "actual_price": 95.98,
+                "discount": "49%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4",
+                "rating_count": "777",
+                "image": "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/31uBcZhDMjL._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "total_amount": 272.55,
+        "date": "2025-11-21",
         "status": "completed"
     },
     {
-        "user_id": 1,
-        "products": [],
-        "total_amount": 0.0,
-        "date": "2025-11-20",
-        "status": "completed"
-    },
-    {
-        "user_id": 1,
-        "products": [],
-        "total_amount": 0.0,
-        "date": "2025-11-20",
-        "status": "completed"
-    },
-    {
-        "user_id": 1,
-        "products": [],
-        "total_amount": 0.0,
-        "date": "2025-11-20",
-        "status": "completed"
-    },
-    {
-        "user_id": 1,
-        "products": [],
-        "total_amount": 0.0,
-        "date": "2025-11-20",
-        "status": "completed"
-    },
-    {
-        "user_id": 1,
-        "products": [],
-        "total_amount": 0.0,
-        "date": "2025-11-20",
-        "status": "completed"
-    },
-    {
-        "user_id": 1,
-        "products": [],
-        "total_amount": 0.0,
-        "date": "2025-11-20",
+        "user_id": 2,
+        "products": [
+            {
+                "product_id": "B09MFR93KS",
+                "name": "Bajaj Rex DLX 750 W 4 Jars Mixer Grinder, White and Blue",
+                "quantity": 5,
+                "price_per_unit": 48.67,
+                "subtotal": 243.35000000000002,
+                "actual_price": 95.98,
+                "discount": "49%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4",
+                "rating_count": "777",
+                "image": "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/31uBcZhDMjL._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "total_amount": 272.55,
+        "date": "2025-11-21",
         "status": "completed"
     }
 ]

@@ -1,10 +1,9 @@
 from pydantic import BaseModel
-from typing import List
 
 class Item(BaseModel):
-    id: str
+    product_id: str
     product_name: str
-    product_category: str
+    category: str
     discounted_price: str
     actual_price: str
     discount_percentage: str
@@ -20,8 +19,9 @@ class Item(BaseModel):
     product_link: str
 
 class ItemCreate(BaseModel):
+    product_id: str
     product_name: str
-    product_category: str
+    category: str
     discounted_price: str
     actual_price: str
     discount_percentage: str
@@ -38,7 +38,7 @@ class ItemCreate(BaseModel):
 
 class ItemUpdate(BaseModel):
     product_name: str
-    product_category: str
+    category: str
     discounted_price: str
     actual_price: str
     discount_percentage: str

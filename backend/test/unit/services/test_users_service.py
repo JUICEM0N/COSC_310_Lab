@@ -23,8 +23,8 @@ def test_get_user_info_not_found():
 
 def test_update_user_success():
     initial_users = [
-        {"id": 1, "username": "Alice", "email": "a@a.com"},
-        {"id": 2, "username": "Bob", "email": "b@b.com"},
+        {"user_id": 1, "username": "Alice", "email": "a@a.com"},
+        {"user_id": 2, "username": "Bob", "email": "b@b.com"},
     ]
 
     updated_data = {"username": "Alicia"}
@@ -42,7 +42,7 @@ def test_update_user_success():
 def test_update_user_not_found():
     with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
         mock_repo.load_users.return_value = [
-            {"id": 1, "username": "Alice"}
+            {"user_id": 1, "username": "Alice"}
         ]
         mock_repo.save_users.return_value = None
 
@@ -52,7 +52,7 @@ def test_update_user_not_found():
         mock_repo.save_users.assert_not_called()
 
 def test_update_user_ignores_unknown_fields():
-    initial_users = [{"id": 1, "username": "Alice"}]
+    initial_users = [{"user_id": 1, "username": "Alice"}]
 
     with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
         mock_repo.load_users.return_value = initial_users
@@ -65,7 +65,7 @@ def test_update_user_ignores_unknown_fields():
         mock_repo.save_users.assert_called_once()
 
 def test_change_password_success():
-    initial_users = [{"id": 1, "password": "old123"}]
+    initial_users = [{"user_id": 1, "password": "old123"}]
 
     with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
         mock_repo.load_users.return_value = initial_users
@@ -78,7 +78,7 @@ def test_change_password_success():
         mock_repo.save_users.assert_called_once()
 
 def test_change_password_wrong_old_password():
-    initial_users = [{"id": 1, "password": "old123"}]
+    initial_users = [{"user_id": 1, "password": "old123"}]
 
     with patch("backend.app.services.users_service.UsersRepo") as mock_repo:
         mock_repo.load_users.return_value = initial_users

@@ -22,3 +22,11 @@ class TransactionsRepo:
         transactions.append(data)
         TransactionsRepo.save_transaction(transactions)
         return data
+    
+    def transaction_exists(transaction_id: str) -> bool:
+        return any(t.get("transaction_id") == transaction_id for t in TransactionsRepo.load_transactions())
+        
+    def user_has_transactions(user_id: int) -> bool:
+        transactions = TransactionsRepo.load_transactions()
+        return any(t.get("user_id") == user_id for t in transactions)
+    

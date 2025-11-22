@@ -11,7 +11,7 @@ class UsersService:
     def update_user(user_id, updated_data):
         users = UsersRepo.load_users()
 
-        user = next((u for u in users if u["id"] == user_id), None)
+        user = next((u for u in users if u["user_id"] == user_id), None)
         if not user:
             return None
 
@@ -25,7 +25,7 @@ class UsersService:
     def change_user_password(user_id, old_password, new_password):
         users = UsersRepo.load_users()
 
-        user = next((u for u in users if u["id"] == user_id), None)
+        user = next((u for u in users if u["user_id"] == user_id), None)
         if not user or user.get("password") != old_password:
             return False
 

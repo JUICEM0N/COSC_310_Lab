@@ -16,10 +16,12 @@ def test_parse_price_empty():
     assert parse_price(None) == 0.0
 
 def test_get_cart_summary_basic():
-    cart_items = [
-        {"product_id": "p1", "quantity": 2},
-        {"product_id": "p2", "quantity": 1},
-    ]
+    cart = {
+        "items": [
+            {"product_id": "p1", "quantity": 2},
+            {"product_id": "p2", "quantity": 1},
+        ]
+    }
 
     product_p1 = {
         "product_id": "p1",
@@ -48,7 +50,8 @@ def test_get_cart_summary_basic():
     with patch("backend.app.services.transactions_service.CartRepo") as mock_cart, \
         patch("backend.app.services.transactions_service.ProductsRepo") as mock_prod:
 
-        mock_cart.get_cart.return_value = cart_items
+        mock_cart.get_cart.return_value = cart
+        mock_cart.cart_exists.return_value = True
         mock_prod.get_products.side_effect = lambda pid: product_p1 if pid == "p1" else product_p2
 
         summary = TransactionsService.get_cart_summary(1)
@@ -65,10 +68,12 @@ def test_get_cart_summary_basic():
         assert p1_summary["subtotal"] == 20.0
 
 def test_get_cart_summary_skips_missing_products():
-    cart_items = [
-        {"product_id": "p1", "quantity": 2},
-        {"product_id": "missing", "quantity": 3},
-    ]
+    cart = {
+        "items": [
+            {"product_id": "p1", "quantity": 2},
+            {"product_id": "missing", "quantity": 3},
+        ]
+    }
 
     product_p1 = {
         "product_id": "p1",
@@ -85,7 +90,8 @@ def test_get_cart_summary_skips_missing_products():
     with patch("backend.app.services.transactions_service.CartRepo") as mock_cart, \
         patch("backend.app.services.transactions_service.ProductsRepo") as mock_prod:
 
-        mock_cart.get_cart.return_value = cart_items
+        mock_cart.get_cart.return_value = cart
+        mock_cart.cart_exists.return_value = True
         mock_prod.get_products.side_effect = lambda pid: product_p1 if pid == "p1" else None
 
         summary = TransactionsService.get_cart_summary(42)
@@ -93,12 +99,12 @@ def test_get_cart_summary_skips_missing_products():
         assert len(summary["items"]) == 1
         assert summary["subtotal"] == 20.0
 
-
 def test_get_cart_summary_empty_cart():
     with patch("backend.app.services.transactions_service.CartRepo") as mock_cart, \
         patch("backend.app.services.transactions_service.ProductsRepo") as mock_prod:
 
-        mock_cart.get_cart.return_value = []
+        mock_cart.get_cart.return_value = {"items": []}
+        mock_cart.cart_exists.return_value = True
         mock_prod.get_products.return_value = None
 
         summary = TransactionsService.get_cart_summary(7)
@@ -118,10 +124,9 @@ def test_checkout_success():
         patch("backend.app.services.transactions_service.TransactionsRepo") as mock_trans, \
         patch("backend.app.services.transactions_service.CartRepo") as mock_cart:
 
-        mock_summary_fn.return_value = {
-            "items": mock_summary["items"],
-            "total": mock_summary["total"],
-        }
+        mock_summary_fn.return_value = mock_summary
+        mock_cart.cart_exists.return_value = True
+        mock_cart.get_cart.return_value = {"items": mock_summary["items"]}
 
         receipt = TransactionsService.checkout(5)
 

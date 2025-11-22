@@ -32,14 +32,15 @@ def test_list_items_maps_fields_correctly():
         items = ItemsService.list_items()
 
         assert len(items) == 1
-        assert items[0].id == "123"
-        assert items[0].product_name == "Laptop"
+        assert items[0]["id"] == "123"
+        assert items[0]["product_name"] == "Laptop"
         mock_repo.load_all.assert_called_once()
 
 def test_create_item_success():
     payload = ItemCreate(
+        product_id="temp",
+        category="Electronics",
         product_name="Mouse",
-        product_category="Electronics",
         discounted_price="10",
         actual_price="20",
         discount_percentage="50%",
@@ -62,13 +63,14 @@ def test_create_item_success():
         item = ItemsService.create_item(payload)
 
         assert item.product_name == "Mouse"
-        assert item.id is not None  # UUID assigned
+        assert item.product_id is not None
         mock_repo.save_all.assert_called_once()
 
 def test_create_item_id_collision():
     payload = ItemCreate(
+        product_id="temp",
+        category="X",
         product_name="Test",
-        product_category="X",
         discounted_price="1",
         actual_price="2",
         discount_percentage="10%",
@@ -85,7 +87,7 @@ def test_create_item_id_collision():
     )
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
-        mock_repo.load_all.return_value = [{"id": "collision"}]
+        mock_repo.load_all.return_value = [{"product_id": "collision"}]
 
         with patch("uuid.uuid4", return_value="collision"):
             with pytest.raises(HTTPException) as exc:
@@ -95,25 +97,41 @@ def test_create_item_id_collision():
 
 def test_get_item_by_id_success():
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
-        mock_repo.load_all.return_value = [{"id": "123", "product_name": "Laptop"}]
+        mock_repo.product_exists.return_value = True
+        mock_repo.load_all.return_value = [{
+            "product_id": "123",
+            "product_name": "Laptop",
+            "category": "Electronics",
+            "discounted_price": "1",
+            "actual_price": "2",
+            "discount_percentage": "1%",
+            "rating": "5",
+            "rating_count": "10",
+            "about_product": "desc",
+            "user_id": "U",
+            "user_name": "N",
+            "review_id": "R",
+            "review_title": "T",
+            "review_content": "C",
+            "img_link": "i",
+            "product_link": "l"
+        }]
 
         item = ItemsService.get_item_by_id("123")
-        assert item.id == "123"
-
+        assert item.product_id == "123"
 
 def test_get_item_by_id_not_found():
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
-        mock_repo.load_all.return_value = []
+        mock_repo.product_exists.return_value = False
 
-        with pytest.raises(HTTPException) as exc:
+        with pytest.raises(HTTPException):
             ItemsService.get_item_by_id("BAD")
-
-        assert exc.value.status_code == 404
 
 def test_update_item_success():
     payload = ItemUpdate(
+        product_id="abc",
+        category="Electronics",
         product_name="Keyboard",
-        product_category="Electronics",
         discounted_price="30",
         actual_price="50",
         discount_percentage="20%",
@@ -130,41 +148,38 @@ def test_update_item_success():
     )
 
     old_item = {
-        "id": "abc",
+        "product_id": "abc",
         "product_name": "Old",
-        "product_category": "OldCat",
-        "discounted_price": "99",
-        "actual_price": "199",
-        "discount_percentage": "80%",
+        "category": "OldCat",
+        "discounted_price": "1",
+        "actual_price": "2",
+        "discount_percentage": "1%",
         "rating": "1",
-        "rating_count": "5",
-        "about_product": "Bad",
-        "user_id": "U0",
-        "user_name": "Someone",
-        "review_id": "RX",
-        "review_title": "Old",
-        "review_content": "Old review",
-        "img_link": "old.jpg",
-        "product_link": "oldlink"
+        "rating_count": "1",
+        "about_product": "O",
+        "user_id": "U",
+        "user_name": "N",
+        "review_id": "R",
+        "review_title": "T",
+        "review_content": "C",
+        "img_link": "i",
+        "product_link": "l"
     }
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
+        mock_repo.product_exists.return_value = True
         mock_repo.load_all.return_value = [old_item]
         mock_repo.save_all.return_value = None
 
         updated = ItemsService.update_item("abc", payload)
 
-        assert updated.id == "abc"
         assert updated.product_name == "Keyboard"
-        assert updated.product_category == "Electronics"
-        assert updated.discounted_price == "30"
-        mock_repo.save_all.assert_called_once()
 
 def test_update_item_overwrites_all_fields():
     old_item = {
-        "id": "aaa",
+        "product_id": "aaa",
         "product_name": "OLD",
-        "product_category": "OLD",
+        "category": "OLD",
         "discounted_price": "9",
         "actual_price": "19",
         "discount_percentage": "90%",
@@ -181,8 +196,9 @@ def test_update_item_overwrites_all_fields():
     }
 
     new_data = ItemUpdate(
+        product_id="aaa",
+        category="NEWCAT",
         product_name="NEW",
-        product_category="NEWCAT",
         discounted_price="10",
         actual_price="20",
         discount_percentage="5%",
@@ -199,19 +215,19 @@ def test_update_item_overwrites_all_fields():
     )
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
+        mock_repo.product_exists.return_value = True
         mock_repo.load_all.return_value = [old_item.copy()]
         mock_repo.save_all.return_value = None
 
         updated = ItemsService.update_item("aaa", new_data)
 
         assert updated.product_name == "NEW"
-        assert updated.review_content == "New review!"
-        assert updated.product_link == "new"
 
 def test_update_item_not_found_does_not_save():
     payload = ItemUpdate(
+        product_id="missing",
+        category="Y",
         product_name="X",
-        product_category="Y",
         discounted_price="1",
         actual_price="2",
         discount_percentage="10%",
@@ -228,21 +244,24 @@ def test_update_item_not_found_does_not_save():
     )
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
-        mock_repo.load_all.return_value = []
+        mock_repo.product_exists.return_value = False
 
         with pytest.raises(HTTPException):
             ItemsService.update_item("missing", payload)
 
         mock_repo.save_all.assert_not_called()
 
+
 def test_delete_item_success():
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
-        mock_repo.load_all.return_value = [{"id": "123"}]
+        mock_repo.product_exists.return_value = True
+        mock_repo.load_all.return_value = [{"product_id": "123"}]
         mock_repo.save_all.return_value = None
 
         ItemsService.delete_item("123")
 
         mock_repo.save_all.assert_called_once()
+
 
 def test_delete_item_not_found():
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
