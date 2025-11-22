@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException
 from backend.app.schemas.user import User, UserUpdate, ChangePassword
 from backend.app.services.users_service import UsersService
+from backend.app.repositories.users_repo import UsersRepo
 
 router = APIRouter(prefix="/users", tags=["users"])
 
-@router.get("/{user_id}/profile", response_model=User)
+@router.get("/get/{user_id}/profile", response_model=User)
 def get_profile(user_id: int):
     user = UsersService.get_user_info(user_id)
     if not user:

@@ -58,3 +58,7 @@ class UsersRepo:
         new_users = [u for u in users if u["user_id"] != user_id]
         UsersRepo.save_users(new_users)
         return len(new_users) < len(users)
+
+    def user_exists(user_id: int) -> bool:
+        users = UsersRepo.load_users()
+        return any(user["user_id"] == user_id for user in users)

@@ -2,12 +2,11 @@ import pytest
 from pydantic import ValidationError
 from backend.app.schemas.item import Item, ItemCreate, ItemUpdate
 
-
 def valid_item_data():
     return {
-        "id": "123",
+        "product_id": "123",
         "product_name": "Laptop",
-        "product_category": "Electronics",
+        "category": "Electronics",
         "discounted_price": "900",
         "actual_price": "1000",
         "discount_percentage": "10%",
@@ -24,38 +23,32 @@ def valid_item_data():
     }
 
 def valid_create_update_data():
-    d = valid_item_data()
-    d.pop("id")
-    return d
-
+    return valid_item_data().copy()
 
 def test_item_valid():
     data = valid_item_data()
     item = Item(**data)
     assert item.product_name == "Laptop"
-    assert item.id == "123"
-
+    assert item.product_id == "123"
 
 def test_item_missing_id():
     data = valid_item_data()
-    data.pop("id")
+    data.pop("product_id")
     with pytest.raises(ValidationError):
         Item(**data)
-
 
 def test_item_invalid_type():
     data = valid_item_data()
-    data["rating"] = 4.5 
+    data["rating"] = 4.5
     with pytest.raises(ValidationError):
         Item(**data)
-
 
 def test_item_create_valid():
     data = valid_create_update_data()
     item = ItemCreate(**data)
-    assert item.product_name == "Laptop"
-    assert not hasattr(item, "id")
 
+    assert item.product_name == "Laptop"
+    assert item.product_id == "123"
 
 def test_item_create_missing_field():
     data = valid_create_update_data()
@@ -63,13 +56,11 @@ def test_item_create_missing_field():
     with pytest.raises(ValidationError):
         ItemCreate(**data)
 
-
 def test_item_create_invalid_type():
     data = valid_create_update_data()
-    data["rating_count"] = 500  
+    data["rating_count"] = 500
     with pytest.raises(ValidationError):
         ItemCreate(**data)
-
 
 def test_item_update_valid():
     data = valid_create_update_data()
@@ -82,7 +73,6 @@ def test_item_update_missing_required_field():
     data.pop("review_title")
     with pytest.raises(ValidationError):
         ItemUpdate(**data)
-
 
 def test_item_update_invalid_type():
     data = valid_create_update_data()
