@@ -14,8 +14,18 @@ def require_admin(user=Depends(UsersService.get_user_info)):
     return user
 
 #gets a overview of all users
-@router.get("/users")
+@router.get("/users", summary="Get all users")
 def get_all_users(admin=Depends(require_admin)):
+    """
+    This endpoint retrieves all users in the system. Admin access is required.
+    
+    routers/admin_dashboard.py -> repositories/users_repo.py/UsersRepo.load_users()
+    
+    Args:
+        admin: The admin user making the request.
+    Returns:
+        dict: A dictionary containing a message and the list of users.
+    """
     users = UsersRepo.load_users()
     if not users:
         return {"message": "No users found"}
@@ -25,8 +35,23 @@ def get_all_users(admin=Depends(require_admin)):
     }
 
 #gets the dashboard of a specific user
-@router.get("/user/{user_id}")
+@router.get("/user/{user_id}", summary="Get user dashboard")
 def get_user_details(user_id: int, admin=Depends(require_admin)):
+    """
+    This endpoint retrieves the dashboard details of a specific user by their ID. Admin access is required.
+    
+    routers/admin_dashboard.py -> repositories/users_repo.py/UsersRepo.load_users()
+    
+    routers/admin_dashboard.py -> repositories/transactions_repo.py/TransactionsRepo.get_transactions_by_user(user_id)
+    
+    routers/admin_dashboard.py -> repositories/penalties_repo.py/PenaltiesRepo.get_penalties(user_id)
+    
+    Args:
+        user_id (int): The ID of the user whose dashboard is to be retrieved.
+        admin: The admin user making the request.
+    Returns:
+        dict: A dictionary containing the user's dashboard details.
+    """
     users = UsersRepo.load_users()
     user = next((u for u in users if u["id"] == user_id), None)
 
@@ -43,9 +68,20 @@ def get_user_details(user_id: int, admin=Depends(require_admin)):
         "penalties": penalties
     }
 
-
-@router.get("/summary")
+@router.get("/summary", summary="Get admin dashboard summary")
 def admin_summary(admin=Depends(require_admin)):
+    """
+    This endpoint retrieves a summary for the admin dashboard, including total counts and recent activities.
+    
+    routers/admin_dashboard.py -> repositories/users_repo.py/UsersRepo.load_users()
+    routers/admin_dashboard.py -> repositories/transactions_repo.py/TransactionsRepo.get_transactions_by_user(user_id)
+    routers/admin_dashboard.py -> repositories/penalties_repo.py/PenaltiesRepo.get_penalties
+    
+    Args:
+        admin: The admin user making the request.
+    Returns:
+        dict: A dictionary containing summary statistics and recent activities.
+    """
     users = UsersRepo.load_users()
 
     #gather global data

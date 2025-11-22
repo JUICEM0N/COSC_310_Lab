@@ -14,25 +14,7 @@ class ItemsService:
         new_id = str(uuid.uuid4())
         if any(it.get("product_id") == new_id for it in items):  # extremely unlikely, but consistent check
             raise HTTPException(status_code=409, detail="ID collision; retry.")
-        # new_item = Item(
-        #     product_id=new_id,
-        #     product_name=payload.product_name,
-        #     category=payload.product_category,
-        #     discounted_price=payload.discounted_price,
-        #     actual_price=payload.actual_price,
-        #     discount_percentage=payload.discount_percentage,
-        #     rating=payload.rating,
-        #     rating_count=payload.rating_count,
-        #     about_product=payload.about_product,
-        #     user_id=payload.user_id,
-        #     user_name=payload.user_name,
-        #     review_id=payload.review_id,
-        #     review_title=payload.review_title,
-        #     review_content=payload.review_content,
-        #     img_link=payload.img_link,
-        #     product_link=payload.product_link
-        # )
-
+        
         new_item = Item(
             product_id=new_id,
             product_name=payload.product_name,
@@ -82,8 +64,6 @@ class ItemsService:
                     product_link=it.get("product_link")
                 )
 
-                # return Item(**mapped)
-
     def update_item(item_id: str, payload: ItemUpdate) -> Item:
         if not ProductsRepo.product_exists(item_id):
             raise HTTPException(status_code=404, detail=f"Item '{item_id}' not found")
@@ -115,8 +95,6 @@ class ItemsService:
 
                 return updated
             
-        # raise HTTPException(status_code=404, detail=f"Item '{item_id}' not found")
-
     def delete_item(item_id: str) -> None:
         if not ProductsRepo.product_exists(item_id):
             raise HTTPException(status_code=404, detail=f"Item '{item_id}' not found")
