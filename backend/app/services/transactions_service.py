@@ -2,6 +2,7 @@ from datetime import date
 from backend.app.repositories.products_repo import ProductsRepo
 from backend.app.repositories.cart_repo import CartRepo
 from backend.app.repositories.transactions_repo import TransactionsRepo
+from fastapi import HTTPException
 
 TAX_RATE = 0.12
 
@@ -13,11 +14,15 @@ def parse_price(price_str: str) -> float:
 class TransactionsService:
 
     def get_cart_summary(user_id: int):
+        if not CartRepo.cart_exists(user_id):
+            raise HTTPException(status_code=404, detail=f"Cart for user '{user_id}' not found")
+
         cart = CartRepo.get_cart(user_id)
         items = []
+        items_list = cart["items"]
         subtotal = 0.0
 
-        for item in cart:
+        for item in items_list:
             product_id = item["product_id"]
             quantity = item["quantity"]
 
@@ -57,9 +62,18 @@ class TransactionsService:
         }
     
     def checkout(user_id: int):
+        if not CartRepo.cart_exists(user_id):
+            raise HTTPException(status_code=404, detail=f"Cart for user '{user_id}' not found")
+        
+        cart = CartRepo.get_cart(user_id)
+
+        if len(cart["items"]) == 0:
+            raise HTTPException(status_code=400, detail="Cannot checkout an empty cart")
+
         summary = TransactionsService.get_cart_summary(user_id)
 
         receipt = {
+            # "transaction_id": "str(uuid.uuid4())",
             "user_id": user_id,
             "products": summary["items"],
             "total_amount": summary["total"],

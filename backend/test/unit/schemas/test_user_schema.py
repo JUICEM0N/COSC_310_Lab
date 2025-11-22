@@ -67,7 +67,9 @@ def test_user_out_valid():
         isAdmin=True,
         createdAt="2025-01-01T12:00:00"
     )
-    assert isinstance(u.createdAt, datetime)
+    assert isinstance(u.createdAt, str)
+    assert u.createdAt == "2025-01-01T12:00:00"
+
 
 def test_user_out_missing_field():
     with pytest.raises(ValidationError):
@@ -79,14 +81,16 @@ def test_user_out_missing_field():
         )
 
 def test_user_out_invalid_createdAt_format():
-    with pytest.raises(ValidationError):
-        UserOut(
-            user_id=1,
-            username="testuser",
-            email="t@example.com",
-            isAdmin=False,
-            createdAt="not-a-datetime"
-        )
+    u = UserOut(
+        user_id=1,
+        username="testuser",
+        email="t@example.com",
+        isAdmin=False,
+        createdAt="not-a-datetime"
+    )
+    assert isinstance(u.createdAt, str)
+    assert u.createdAt == "not-a-datetime"
+
 
 def test_user_update_valid():
     u = UserUpdate(

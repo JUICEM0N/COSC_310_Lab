@@ -23,7 +23,6 @@ def get_item(item_id: str):
 def put_item(item_id: str, payload: ItemUpdate):
     return ItemsService.update_item(item_id, payload)
 
-
 ## we put the status there becuase in a delete, we wont have a return so it indicates it happened succesfully
 @router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
 def remove_item(item_id: str):
