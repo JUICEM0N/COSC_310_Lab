@@ -1,8 +1,10 @@
 [
-    {
-        "user_id": 2,
-        "type": "late_submission",
-        "date": "2024-10-01",
-        "length": "2 days"
-    }
+  {
+    "id": "cf6841fd-8a3c-409a-b485-5877cc0689ce",
+    "user_id": 2,
+    "reason": "Late Payment",
+    "amount": 2.0,
+    "status": "string",
+    "date_issued": "2025-11-28T03:27:47.505157"
+  }
 ]

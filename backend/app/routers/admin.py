@@ -7,6 +7,8 @@ router = APIRouter(prefix="/admin", tags=["Admin"])
 service = AdminService()
 
 def require_admin(user = Depends(UsersService.get_user_info)):
+    if not user or not isinstance(user, dict):
+        raise HTTPException(status_code=401, detail="Not authenticated")
     if not user.get("isAdmin", False):
         raise HTTPException(status_code=403, detail="Admin access required")
     return user
