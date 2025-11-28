@@ -1,18 +1,18 @@
 [
-    {
-        "user_id": 1,
-        "username": "admin",
-        "password": "pass",
-        "email": "admin@email.com",
-        "isAdmin": true,
-        "createdAt": "date-time"
-    },
-    {
-        "user_id": 2,
-        "username": "sebcs",
-        "password": "password",
-        "email": "email@email.com",
-        "isAdmin": false,
-        "createdAt": "date-time"
-    }
+  {
+    "user_id": 1,
+    "username": "admin",
+    "password": "pass",
+    "email": "admin@email.com",
+    "isAdmin": true,
+    "createdAt": "date-time"
+  },
+  {
+    "user_id": 2,
+    "username": "sebcs",
+    "password": "password",
+    "email": "email@email.com",
+    "isAdmin": false,
+    "createdAt": "date-time"
+  }
 ]

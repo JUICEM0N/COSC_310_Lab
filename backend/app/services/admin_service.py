@@ -8,13 +8,13 @@ class AdminService:
 
     def promote_user(self, user_id: int):
         users = repo.load_users()
-        
+
         for user in users:
-            if user["id"] == user_id:
+            if user["user_id"] == user_id:
                 user["isAdmin"] = True
                 repo.save_users(users)
                 return True
-        
+
         return False
 
     def apply_penalty(self, user_id: int, reason: str, amount: float, status: str):
