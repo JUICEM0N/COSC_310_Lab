@@ -4,6 +4,6 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend/data:/app/data
+      - ./backend/app/data:/app/backend/app/data
     environment:
       - ENV=development
