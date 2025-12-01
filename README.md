@@ -26,4 +26,5 @@ In the terminal, run `pylint path-to-file` to run PyLint on specific file
 1. Make sure your Docker engine is running
 2. Change working directory to project root `cd ~/COSC_310_Lab` or whever you saved it to
 3. Run `docker-compose up --build`
-4. Open up http://localhost:8000 for site, http://localhost:8000/docs for endpoints via SwaggerUI, or http://localhost:8000/redoc for endpoint documentation
+4. For Backend: Open http://localhost:8000 for "site", http://localhost:8000/docs for endpoints via SwaggerUI, or http://localhost:8000/redoc for endpoint documentation
+5. For Frontend: Open http://localhost:3000 for UI
