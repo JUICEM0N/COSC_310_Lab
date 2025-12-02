@@ -1,0 +1,7 @@
+pylint
+fastapi[standard]
+httpx
+pytest
+pytest-cov
+pydantic
+bcrypt
