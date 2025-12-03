@@ -1,18 +1,10 @@
 [
-  {
-    "user_id": 1,
-    "username": "admin",
-    "password": "pass",
-    "email": "admin@email.com",
-    "isAdmin": true,
-    "createdAt": "date-time"
-  },
-  {
-    "user_id": 2,
-    "username": "sebcs",
-    "password": "password",
-    "email": "email@email.com",
-    "isAdmin": false,
-    "createdAt": "date-time"
-  }
+    {
+        "user_id": 4,
+        "username": "wrongpass",
+        "password": "$2b$12$EFe99vlKkS2JFb4kKA34oeGONZyVkaF5Nb.zu8p7LHjVi04TdNtry",
+        "email": "wrong@test.com",
+        "isAdmin": false,
+        "createdAt": "2025-01-01"
+    }
 ]

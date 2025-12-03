@@ -5,7 +5,6 @@ from backend.app.repositories.products_repo import ProductsRepo
 
 @pytest.fixture
 def temp_products_file(tmp_path, monkeypatch):
-    """Creates a temporary amazon_cad.json for isolation."""
     temp_json = tmp_path / "amazon_cad.json"
     temp_json.write_text("[]") 
 
@@ -65,3 +64,76 @@ def test_save_all_overwrites_file_safely(temp_products_file):
 
     data = read_json(temp_products_file)
     assert data == [{"product_id": "T3", "rating": 5.0}]
+
+@pytest.fixture
+def mock_products(monkeypatch):
+    data = [
+        {
+            "product_name": "Apple iPhone 13",
+            "discounted_price": "$799.00",
+            "category": "Electronics|Mobile",
+            "rating": "4.5"
+        },
+        {
+            "product_name": "Samsung TV 55 Inch",
+            "discounted_price": "$699.00",
+            "category": "Electronics|TV",
+            "rating": "4.0"
+        },
+        {
+            "product_name": "Juicer Mixer Grinder",
+            "discounted_price": "$59.00",
+            "category": "Home|Kitchen",
+            "rating": "|"
+        }
+    ]
+
+    def fake_load_products():
+        return data
+
+    monkeypatch.setattr(ProductsRepo, "load_products", fake_load_products)
+    return data
+
+def test_search_products_found(mock_products):
+    results = ProductsRepo.search_products("iphone")
+    assert len(results) == 1
+    assert results[0]["product_name"] == "Apple iPhone 13"
+
+def test_search_products_not_found(mock_products):
+    with pytest.raises(Exception) as e:
+        ProductsRepo.search_products("nonexistent")
+    assert "don't have nonexistent" in str(e.value)
+
+def test_filter_by_keyword(mock_products):
+    results = ProductsRepo.filter_products(keyword="tv")
+    assert len(results) == 1
+    assert "Samsung TV" in results[0]["product_name"]
+
+def test_filter_by_min_price(mock_products):
+    results = ProductsRepo.filter_products(min_price=700)
+    assert len(results) == 1
+    assert "iPhone" in results[0]["product_name"]
+
+def test_filter_by_max_price(mock_products):
+    results = ProductsRepo.filter_products(max_price=100)
+    assert len(results) == 1
+    assert "Juicer" in results[0]["product_name"]
+
+def test_filter_by_category(mock_products):
+    results = ProductsRepo.filter_products(category="mobile")
+    assert len(results) == 1
+    assert "iPhone" in results[0]["product_name"]
+
+def test_filter_by_rating_valid(mock_products):
+    results = ProductsRepo.filter_products(rating=4.2)
+    assert len(results) == 1
+    assert "iPhone" in results[0]["product_name"]
+
+def test_filter_by_rating_ignores_invalid(mock_products):
+    results = ProductsRepo.filter_products(rating=0)
+    assert len(results) == 2
+
+def test_filter_products_no_match(mock_products):
+    with pytest.raises(Exception) as e:
+        ProductsRepo.filter_products(keyword="xyz")
+    assert "No products found matching the filter criteria." in str(e.value)
