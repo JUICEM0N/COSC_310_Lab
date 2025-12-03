@@ -1,7 +1,8 @@
-from fastapi import APIRouter, status
-from typing import List
+from fastapi import APIRouter, status, Query
+from typing import List, Optional
 from backend.app.schemas.item import Item, ItemCreate, ItemUpdate
 from backend.app.services.items_service import ItemsService
+from backend.app.repositories.products_repo import ProductsRepo
 
 router = APIRouter(prefix="/items", tags=["Items"])
 
@@ -33,6 +34,44 @@ def post_item(payload: ItemCreate):
         Item: The created item
     """
     return ItemsService.create_item(payload)
+
+@router.get("/search", summary="Search for items by keyword in name, description, or category")
+def search_item(keyword: str = Query(..., description="Keyword to search by")):
+    """
+    This endpoint searches for items in our dataset by a keyword that can be found in the name, description, or category fields
+
+    router/Items.py -> repositories/products_repo.py/ProductsRepo.search_product(keyword) -> repositories/products_repo.py/ProductsRepo.load_products()
+
+    Args:
+        keyword (str): The keyword to search for
+    Returns:
+        List[Item]: A list of items that match the search criteria
+    """
+    return ProductsRepo.search_products(keyword)
+
+@router.get("/search/filter", summary="Filter items based on various criteria")
+def filter_items(
+    keyword: Optional[str] = None,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
+    category: Optional[str] = None,
+    rating: Optional[float] = None
+):
+    """
+    This endpoint filters items in our dataset based on various criteria such as keyword, price range, category, and rating
+
+    router/Items.py -> repositories/products_repo.py/ProductsRepo.filter_products(keyword, min_price, max_price, category, rating) -> repositories/products_repo.py/ProductsRepo.load_products()
+
+    Args:
+        keyword (str, optional): The keyword to filter by
+        min_price (float, optional): The minimum price
+        max_price (float, optional): The maximum price
+        category (str, optional): The category to filter by
+        rating (float, optional): The minimum rating
+    Returns:
+        List[Item]: A list of items that match the filter criteria
+    """
+    return ProductsRepo.filter_products(keyword=keyword, min_price=min_price, max_price=max_price, category=category, rating=rating)
 
 @router.get("/{item_id}", response_model=Item, summary="Retrieves a specific item by its product_id from our dataset")
 def get_item(item_id: str):
@@ -75,7 +114,7 @@ def put_item(item_id: str, payload: ItemUpdate):
 @router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Deletes item from our dataset")
 def remove_item(item_id: str):
     """
-    This endpoint deeletes an item from our dataset, identified but its product_id
+    This endpoint deletes an item from our dataset, identified but its product_id
 
     router/Items.py -> services/items_service.py/ItemsService.delete_item(item_id) -> repositories/products_repo.py/ProductsRepo.product_exists(item_id)
     
