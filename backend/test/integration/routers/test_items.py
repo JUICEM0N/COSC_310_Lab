@@ -27,7 +27,8 @@ def test_create_item():
             "review_title": "Nice",
             "review_content": "This item is good",
             "img_link": "http://example.com/img.png",
-            "product_link": "http://example.com/product"
+            "product_link": "http://example.com/product",
+            "quantity": 5
         }
 
         response = client.post(
@@ -48,7 +49,8 @@ def test_create_item():
                 "review_title": "Nice",
                 "review_content": "This item is good",
                 "img_link": "http://example.com/img.png",
-                "product_link": "http://example.com/product"
+                "product_link": "http://example.com/product",
+                "quantity": 5
             }
         )
 
