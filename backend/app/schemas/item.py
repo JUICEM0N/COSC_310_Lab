@@ -17,6 +17,7 @@ class Item(BaseModel):
     review_content: str
     img_link: str
     product_link: str
+    quantity: int
 
 class ItemCreate(BaseModel):
     product_id: str
@@ -35,6 +36,7 @@ class ItemCreate(BaseModel):
     review_content: str
     img_link: str
     product_link: str
+    quantity: int
 
 class ItemUpdate(BaseModel):
     product_name: str
@@ -52,3 +54,4 @@ class ItemUpdate(BaseModel):
     review_content: str
     img_link: str
     product_link: str
+    quantity: int

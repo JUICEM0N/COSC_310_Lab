@@ -23,6 +23,7 @@ def test_list_items_maps_fields_correctly():
             "review_content": "Good product",
             "img_link": "img.jpg",
             "product_link": "product.com",
+            "quantity": 10
         }
     ]
 
@@ -53,7 +54,8 @@ def test_create_item_success():
         review_title="Great",
         review_content="Very good",
         img_link="img2.jpg",
-        product_link="product.com/mouse"
+        product_link="product.com/mouse",
+        quantity= 67
     )
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
@@ -83,7 +85,8 @@ def test_create_item_id_collision():
         review_title="title",
         review_content="content",
         img_link="img.jpg",
-        product_link="link"
+        product_link="link",
+        quantity=41
     )
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
@@ -114,7 +117,8 @@ def test_get_item_by_id_success():
             "review_title": "T",
             "review_content": "C",
             "img_link": "i",
-            "product_link": "l"
+            "product_link": "l",
+            "quantity": 8
         }]
 
         item = ItemsService.get_item_by_id("123")
@@ -144,7 +148,8 @@ def test_update_item_success():
         review_title="Great!",
         review_content="Solid keyboard",
         img_link="keyboard.jpg",
-        product_link="product.com/keyboard"
+        product_link="product.com/keyboard",
+        quantity=6
     )
 
     old_item = {
@@ -163,7 +168,8 @@ def test_update_item_success():
         "review_title": "T",
         "review_content": "C",
         "img_link": "i",
-        "product_link": "l"
+        "product_link": "l",
+        "quantity": "H"
     }
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
@@ -192,7 +198,8 @@ def test_update_item_overwrites_all_fields():
         "review_title": "OLD",
         "review_content": "OLD",
         "img_link": "old.jpg",
-        "product_link": "old"
+        "product_link": "old",
+        "quantity": 5
     }
 
     new_data = ItemUpdate(
@@ -211,7 +218,8 @@ def test_update_item_overwrites_all_fields():
         review_title="Great",
         review_content="New review!",
         img_link="new.jpg",
-        product_link="new"
+        product_link="new",
+        quantity=7
     )
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:
@@ -240,7 +248,8 @@ def test_update_item_not_found_does_not_save():
         review_title="T",
         review_content="C",
         img_link="img.jpg",
-        product_link="lnk"
+        product_link="lnk",
+        quantity=7
     )
 
     with patch("backend.app.services.items_service.ProductsRepo") as mock_repo:

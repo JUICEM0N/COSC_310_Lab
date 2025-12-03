@@ -2,7 +2,7 @@
     {
         "user_id": 4,
         "username": "wrongpass",
-        "password": "$2b$12$awpmOa.IuTPB08VGtVrtEeclpOBDiMzoS/D2Xpeu1XSnuir.CvHja",
+        "password": "$2b$12$EFe99vlKkS2JFb4kKA34oeGONZyVkaF5Nb.zu8p7LHjVi04TdNtry",
         "email": "wrong@test.com",
         "isAdmin": false,
         "createdAt": "2025-01-01"

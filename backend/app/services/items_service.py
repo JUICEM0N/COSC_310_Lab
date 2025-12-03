@@ -31,7 +31,8 @@ class ItemsService:
             review_title=payload.review_title,
             review_content=payload.review_content,
             img_link=payload.img_link,
-            product_link=payload.product_link
+            product_link=payload.product_link,
+            quantity=payload.quantity
         )
 
         items.append(new_item.model_dump())
@@ -61,7 +62,8 @@ class ItemsService:
                     review_title=it.get("review_title"),
                     review_content=it.get("review_content"),
                     img_link=it.get("img_link"),
-                    product_link=it.get("product_link")
+                    product_link=it.get("product_link"),
+                    quantity=it.get("quantity")
                 )
 
     def update_item(item_id: str, payload: ItemUpdate) -> Item:
@@ -87,7 +89,8 @@ class ItemsService:
                     review_title=payload.review_title,
                     review_content=payload.review_content,
                     img_link=payload.img_link,
-                    product_link=payload.product_link
+                    product_link=payload.product_link,
+                    quantity=payload.quantity
                 )
 
                 items[idx] = updated.model_dump()
@@ -106,3 +109,14 @@ class ItemsService:
             raise HTTPException(status_code=404, detail=f"Item '{item_id}' not found")
         
         ProductsRepo.save_all(new_items)
+
+    def update_quantity(item_id: str, quantity: int):
+        items = ProductsRepo.load_products()
+
+        for item in items:
+            if item.get("product_id") == item_id:
+                item["quantity"] = quantity
+                ProductsRepo.save_all(items)
+                return item
+
+        raise HTTPException(status_code=404, detail=f"Item '{item_id}' not found")

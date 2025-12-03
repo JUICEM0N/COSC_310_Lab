@@ -42,5 +42,8 @@ def test_get_cart():
         mock_service.get_cart.assert_called_once_with(1)
 
 def test_clear_cart():
-    response = client.delete("/cart/1/clear")
-    assert response.status_code == 200
+    with patch("backend.app.routers.cart.CartService") as mock_service:
+        mock_service.clear_cart.return_value = None
+        response = client.delete("/cart/1/clear")
+        assert response.status_code == 200
+        mock_service.clear_cart.assert_called_once_with(1)

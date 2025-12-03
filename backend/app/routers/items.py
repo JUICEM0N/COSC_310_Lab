@@ -110,6 +110,21 @@ def put_item(item_id: str, payload: ItemUpdate):
     """
     return ItemsService.update_item(item_id, payload)
 
+@router.patch("/{item_id}/quantity", summary="Update item quantity")
+def update_quantity(item_id: str, quantity: int = Query(..., ge=0, description="New quantity for the item")):
+    """
+    Update only the quantity of an item without modifying any other fields.
+
+    router/items.py -> ItemsService.update_quantity(item_id, quantity) -> ProductsRepo.save_all(items)
+
+    Args:
+        item_id (str): The product_id of the item to be updated
+        payload (ItemUpdate): The item data to be updated
+    Returns:
+        Item: The update item (quantity)
+    """
+    return ItemsService.update_quantity(item_id, quantity)
+
 ## we put the status there becuase in a delete, we wont have a return so it indicates it happened succesfully
 @router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Deletes item from our dataset")
 def remove_item(item_id: str):

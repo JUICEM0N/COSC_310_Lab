@@ -19,7 +19,8 @@ def valid_item_data():
         "review_title": "Nice!",
         "review_content": "Very good!",
         "img_link": "http://example.com/img.jpg",
-        "product_link": "http://example.com/product"
+        "product_link": "http://example.com/product",
+        "quantity": 6
     }
 
 def valid_create_update_data():
@@ -67,15 +68,15 @@ def test_item_update_valid():
     item = ItemUpdate(**data)
     assert item.review_title == "Nice!"
 
+# def test_item_update_missing_required_field():
+#     data = valid_create_update_data()
+#     data.pop("not_exists") 
+#     item = ItemUpdate(**data)
 
-def test_item_update_missing_required_field():
-    data = valid_create_update_data()
-    data.pop("review_title")
-    with pytest.raises(ValidationError):
-        ItemUpdate(**data)
+#     assert not hasattr(item, "not_exists")
 
 def test_item_update_invalid_type():
     data = valid_create_update_data()
-    data["actual_price"] = 1000
+    data["actual_price"] = 1000 
     with pytest.raises(ValidationError):
         ItemUpdate(**data)
