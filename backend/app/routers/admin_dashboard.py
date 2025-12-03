@@ -4,13 +4,16 @@ from backend.app.services.users_service import UsersService
 from backend.app.repositories.users_repo import UsersRepo
 from backend.app.repositories.transactions_repo import TransactionsRepo
 from backend.app.repositories.penalties_repo import PenaltiesRepo
+from fastapi.responses import FileResponse
+from backend.app.repositories.products_repo import ProductsRepo
+import os
 
 router = APIRouter(prefix="/admin_dashboard", tags=["Admin Dashboard"])
 service = AdminService()
 
 #requires admin
 def require_admin(user=Depends(UsersService.get_user_info)):
-    if not user.get("isAdmin", False):
+    if not user or not user.get("isAdmin", False):
         raise HTTPException(status_code=403, detail="Admin access required")
     return user
 
@@ -118,3 +121,58 @@ def admin_summary(admin=Depends(require_admin)):
             "recent_penalties": all_penalties_sorted[:10]
         }
     }
+@router.get("/inventory", summary="Get inventory stock updates")
+def get_inventory_updates(admin=Depends(require_admin)):
+    """
+    This endpoint retrieves inventory stock updates, including low stock and out-of-stock products.
+    
+    routers/admin_dashboard.py -> repositories/products_repo.py/ProductsRepo.load_products()
+    
+    Args:
+        admin: The admin user making the request.
+    Returns:
+        dict: A dictionary containing inventory stock updates.
+    """
+    products = ProductsRepo.load_products()
+
+    if not products:
+        return {"message": "No products found"}
+
+    low_stock = [p for p in products if p.get("quantity", 0) <= 5 and p.get("quantity", 0) > 0]
+    out_of_stock = [p for p in products if p.get("quantity", 0) == 0]
+
+    return {
+        "message": "Inventory updates retrieved",
+        "inventory_summary": {
+            "total_products": len(products),
+            "low_stock_count": len(low_stock),
+            "out_of_stock_count": len(out_of_stock),
+        },
+        "details": {
+            "low_stock_products": low_stock,
+            "out_of_stock_products": out_of_stock,
+            "all_products": products
+        }
+    }
+@router.get("/download/transactions", summary="Download all transactions JSON")
+def download_all_transactions(admin=Depends(require_admin)):
+    """
+    This endpoint allows the admin to download all transactions in JSON format.
+    
+    routers/admin_dashboard.py -> data/transactions.json
+    
+    Args:
+        admin: The admin user making the request.
+    Returns:
+        FileResponse: A response that prompts the download of the transactions JSON file.
+    """
+    file_path = "backend/app/data/transactions.json"
+
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="transactions.json not found")
+
+    return FileResponse(
+        path=file_path,
+        filename="all_transactions.json",
+        media_type="application/json"
+    )

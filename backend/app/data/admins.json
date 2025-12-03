@@ -1,0 +1,9 @@
+[
+    {
+    "admin_id": 1,
+    "username": "admin",
+    "password": "pass",
+    "email": "admin@email.com",
+    "createdAt": "date-time"
+    }
+]
