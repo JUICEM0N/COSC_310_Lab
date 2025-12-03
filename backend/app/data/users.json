@@ -1,5 +1,13 @@
 [
     {
+        "user_id": 1,
+        "username": "admin",
+        "password": "pass",
+        "email": "admin@gmail.com",
+        "isAdmin": true,
+        "createdAt": "2025-01-01"
+    },
+    {    
         "user_id": 4,
         "username": "wrongpass",
         "password": "$2b$12$EFe99vlKkS2JFb4kKA34oeGONZyVkaF5Nb.zu8p7LHjVi04TdNtry",

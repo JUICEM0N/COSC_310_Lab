@@ -1,53 +1,53 @@
-import json
-from pathlib import Path
+import pytest
 from backend.app.repositories.admin_repo import AdminRepository
 
-def make_temp_repo(tmp_path):
-    users_path = tmp_path / "users.json"
-    penalties_path = tmp_path / "penalties.json"
+@pytest.fixture
+def repo(tmp_path):
 
-    users_path.write_text("[]")
-    penalties_path.write_text("[]")   
+    admin_repo = AdminRepository()
+    admin_repo.users_path = tmp_path / "users.json"
+    admin_repo.penalties_path = tmp_path / "penalties.json"
+    admin_repo.admins_path = tmp_path / "admins.json"
+    admin_repo.products_of_week_path = tmp_path / "products_of_week.json"
+    admin_repo.discounts_path = tmp_path / "discounts.json"
 
-    repo = AdminRepository()
+    for path in [
+        admin_repo.users_path,
+        admin_repo.penalties_path,
+        admin_repo.admins_path,
+        admin_repo.products_of_week_path,
+        admin_repo.discounts_path
+    ]:
+        path.write_text("[]")
 
-    repo.users_path = users_path
-    repo.penalties_path = penalties_path
-
-    return repo
+    return admin_repo
 
 
-def test_load_users(tmp_path):
-    repo = make_temp_repo(tmp_path)
-
+def test_users(repo):
+    repo.save_users([{"user_id": 1, "name": "Alice"}])
     users = repo.load_users()
-    assert isinstance(users, list)
-    assert users == []
+    assert users == [{"user_id": 1, "name": "Alice"}]
 
 
-def test_save_users(tmp_path):
-    repo = make_temp_repo(tmp_path)
-
-    data = [{"id": 1, "name": "Alice"}]
-    repo.save_users(data)
-
-    saved = json.loads(repo.users_path.read_text())
-    assert saved == data
-
-
-def test_load_penalties(tmp_path):
-    repo = make_temp_repo(tmp_path)
-
+def test_penalties(repo):
+    repo.save_penalties([{"id": 1, "reason": "Late return"}])
     penalties = repo.load_penalties()
-    assert isinstance(penalties, list)
-    assert penalties == []
+    assert penalties == [{"id": 1, "reason": "Late return"}]
 
 
-def test_save_penalties(tmp_path):
-    repo = make_temp_repo(tmp_path)
+def test_admins(repo):
+    repo.save_admins([{"user_id": 99, "name": "Admin"}])
+    admins = repo.load_admins()
+    assert admins == [{"user_id": 99, "name": "Admin"}]
 
-    data = [{"id": "123", "user_id": 1, "amount": 50}]
-    repo.save_penalties(data)
 
-    saved = json.loads(repo.penalties_path.read_text())
-    assert saved == data
+def test_products_of_week(repo):
+    repo.save_products_of_week([101, 102])
+    products = repo.load_products_of_week()
+    assert products == [101, 102]
+
+
+def test_discounts(repo):
+    repo.save_discounts([{"product_id": 101, "discount_percent": 20.0}])
+    discounts = repo.load_discounts()
+    assert discounts == [{"product_id": 101, "discount_percent": 20.0}]
