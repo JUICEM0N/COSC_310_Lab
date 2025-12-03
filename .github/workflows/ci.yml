@@ -40,23 +40,24 @@ jobs:
           --maxfail=3 \
           --disable-warnings \
           --cov=backend/app \
+          --cov-report=xml:testing-documents/coverage/coverage.xml \
           --cov-report=term-missing \
-          --cov-report=xml:testing-documents/coverage/coverage-temp.xml \
         | tee testing-documents/unit-tests/unit-results-${{ steps.time.outputs.tstamp }}.txt
 
-    - name: Run Integration Tests
+    - name: Run Integration Tests (append to coverage)
       run: |
         pytest backend/test/integration \
           --maxfail=3 \
           --disable-warnings \
           --cov=backend/app \
           --cov-append \
+          --cov-report=xml:testing-documents/coverage/coverage.xml \
           --cov-report=term-missing \
         | tee testing-documents/integration-tests/integration-results-${{ steps.time.outputs.tstamp }}.txt
 
-    - name: Generate Combined Coverage XML
+    - name: Timestamp Final Coverage Report
       run: |
-        mv testing-documents/coverage/coverage-temp.xml \
+        mv testing-documents/coverage/coverage.xml \
           testing-documents/coverage/coverage-${{ steps.time.outputs.tstamp }}.xml
 
     - name: Upload testing-documents folder
