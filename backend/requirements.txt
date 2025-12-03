@@ -5,3 +5,5 @@ pytest
 pytest-cov
 pydantic
 bcrypt
+python-dotenv
+requests

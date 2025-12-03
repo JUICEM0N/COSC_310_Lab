@@ -116,5 +116,116 @@
         "total_amount": 272.55,
         "date": "2025-11-21",
         "status": "completed"
+    },
+    {
+        "id": "6BIDaiKSzJQ",
+        "user_id": 3,
+        "date": "2025-12-02",
+        "status": "completed",
+        "products": [
+            {
+                "product_id": "B08L7J3T31",
+                "name": "Noir Aqua - 5pcs PP Spun Filter + 1 Spanner | for All Types of RO Water purifiers (5 Piece, White, 15 Inch, 5 Micron) - RO Spun Filter Cartridge Sponge Replacement Water Filter Candle",
+                "quantity": 5,
+                "price_per_unit": 6.06,
+                "subtotal": 30.3,
+                "actual_price": "$14.7",
+                "discount": "59%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|WaterPurifiers&Accessories|WaterPurifierAccessories",
+                "rating": "4",
+                "rating_count": "1,090",
+                "image": "https://m.media-amazon.com/images/I/41fDdRtjfxL._SY445_SX342_QL70_FMwebp_.jpg"
+            }
+        ],
+        "subtotal": 30.3,
+        "tax": 3.64,
+        "total_amount": 33.94
+    },
+    {
+        "id": "6K82WjR9Dbri9tXBeuZ4BNzGGcZj5fpZ",
+        "user_id": 3,
+        "date": "2025-12-03",
+        "status": "completed",
+        "products": [
+            {
+                "product_id": "B0B8CB7MHW",
+                "name": "KNOWZA Electric Handheld Milk Wand Mixer Frother for Latte Coffee Hot Milk, Milk Frother for Coffee, Egg Beater, Hand Blender, Coffee Beater (BLACK COFFEE BEATER)",
+                "quantity": 5,
+                "price_per_unit": 6.82,
+                "subtotal": 34.1,
+                "actual_price": "$15.98",
+                "discount": "57%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|HandBlenders",
+                "rating": "4.1",
+                "rating_count": "222",
+                "image": "https://m.media-amazon.com/images/I/51HzkPoNUzL._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "subtotal": 34.1,
+        "tax": 4.09,
+        "total_amount": 38.19
+    },
+    {
+        "id": "6fsW58ZiSBTSvyMlaEFhCykQ8klf1XAy",
+        "user_id": 3,
+        "date": "2025-12-03",
+        "status": "completed",
+        "products": [
+            {
+                "product_id": "B0B8CB7MHW",
+                "name": "KNOWZA Electric Handheld Milk Wand Mixer Frother for Latte Coffee Hot Milk, Milk Frother for Coffee, Egg Beater, Hand Blender, Coffee Beater (BLACK COFFEE BEATER)",
+                "quantity": 2,
+                "price_per_unit": 6.82,
+                "subtotal": 13.64,
+                "actual_price": "$15.98",
+                "discount": "57%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|HandBlenders",
+                "rating": "4.1",
+                "rating_count": "222",
+                "image": "https://m.media-amazon.com/images/I/51HzkPoNUzL._SX300_SY300_QL70_FMwebp_.jpg"
+            },
+            {
+                "product_id": "B07VZYMQNZ",
+                "name": "Borosil Rio 1.5 L Electric Kettle, Stainless Steel Inner Body, Boil Water For Tea, Coffee, Soup, Silver",
+                "quantity": 6,
+                "price_per_unit": 18.88,
+                "subtotal": 113.28,
+                "actual_price": "$23.04",
+                "discount": "18%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|Kettles&HotWaterDispensers|ElectricKettles",
+                "rating": "4.2",
+                "rating_count": "1,527",
+                "image": null
+            },
+            {
+                "product_id": "B078JT7LTD",
+                "name": "Sujata Dynamix, Mixer Grinder, 900 Watts, 3 Jars (White)",
+                "quantity": 7,
+                "price_per_unit": 97.92,
+                "subtotal": 685.44,
+                "actual_price": "$129.17",
+                "discount": "24%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4.6",
+                "rating_count": "2,751",
+                "image": "https://m.media-amazon.com/images/I/415634DtKfL._SX300_SY300_QL70_FMwebp_.jpg"
+            },
+            {
+                "product_id": "B09MFR93KS",
+                "name": "Bajaj Rex DLX 750 W 4 Jars Mixer Grinder, White and Blue",
+                "quantity": 3,
+                "price_per_unit": 48.67,
+                "subtotal": 146.01,
+                "actual_price": "$95.98",
+                "discount": "49%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4",
+                "rating_count": "777",
+                "image": null
+            }
+        ],
+        "subtotal": 958.37,
+        "tax": 115.0,
+        "total_amount": 1073.37
     }
 ]

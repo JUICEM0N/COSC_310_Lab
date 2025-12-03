@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI
 from backend.app.routers import (
     users, items, cart, user_dashboard, auth,
@@ -22,4 +25,3 @@ def health():
 @app.get("/")
 def root():
     return {"msg": "Hello World"}
-

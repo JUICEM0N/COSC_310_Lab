@@ -44,7 +44,7 @@ jobs:
           --cov-report=term-missing \
         | tee testing-documents/unit-tests/unit-results-${{ steps.time.outputs.tstamp }}.txt
 
-    - name: Run Integration Tests (append to coverage)
+    - name: Run Integration Tests
       run: |
         pytest backend/test/integration \
           --maxfail=3 \

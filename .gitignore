@@ -20,7 +20,9 @@ backend/test/integration/.pytest_cache/
 backend/test/integration/routers/.pytest_cache/
 
 *.pid
+*.env
 .env
+backend/app/.env
 .env.local
 
 .DS_Store
