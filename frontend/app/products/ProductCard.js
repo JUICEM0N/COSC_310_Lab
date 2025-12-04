@@ -1,6 +1,27 @@
 "use client";
 
+import api from "@/lib/api";
+
 export default function ProductCard({ item }) {
+
+    const addToCart = async () => {
+        const savedUser = localStorage.getItem("user");
+        if (!savedUser) {
+            alert("Please login to add items to cart");
+            return;
+        }
+
+        const user = JSON.parse(savedUser);
+        const userId = user.user_id || user.id;
+
+        try {
+            await api.post(`/cart/${userId}/add?product_id=${item.product_id}&quantity=1`);
+            alert("Item added to cart!");
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+            alert("Failed to add item to cart");
+        }
+    };
 
     const aboutList = item.about_product
         ? item.about_product.split("|")
@@ -27,7 +48,7 @@ export default function ProductCard({ item }) {
                 <span className="discount"> ({item.discount_percentage} off)</span>
             </p>
 
-            <button type="button" className="add-to-cart">Add to Cart</button>           
+            <button type="button" className="add-to-cart" onClick={addToCart}>Add to Cart</button>           
 
             <p className="rating-line">
                 Rating: {item.rating}/5
