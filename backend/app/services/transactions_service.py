@@ -2,6 +2,8 @@ from datetime import date
 from backend.app.repositories.products_repo import ProductsRepo
 from backend.app.repositories.cart_repo import CartRepo
 from backend.app.repositories.transactions_repo import TransactionsRepo
+from backend.app.services.email_service import EmailService
+from backend.app.services.receipt_service import ReceiptService
 from fastapi import HTTPException
 
 TAX_RATE = 0.12
@@ -70,18 +72,37 @@ class TransactionsService:
         if len(cart["items"]) == 0:
             raise HTTPException(status_code=400, detail="Cannot checkout an empty cart")
 
-        summary = TransactionsService.get_cart_summary(user_id)
+        email = ReceiptService.validate_user_email(user_id)
 
-        receipt = {
-            # "transaction_id": "str(uuid.uuid4())",
+        order = ReceiptService.build_order(user_id)
+
+        receipt_hash = ReceiptService.generate_receipt_hash(order)
+
+        html = ReceiptService.generate_html_receipt(order, receipt_hash)
+
+        EmailService.send_email(
+            to_email=email,
+            subject="Your StackSquad Receipt",
+            html_body=html
+        )
+
+        transaction = {
+            "id": receipt_hash,
             "user_id": user_id,
-            "products": summary["items"],
-            "total_amount": summary["total"],
             "date": str(date.today()),
-            "status": "completed"
+            "status": "completed",
+            "products": order["items"],
+            "subtotal": order["subtotal"],
+            "tax": order["tax"],
+            "total_amount": order["total"],
         }
 
-        TransactionsRepo.add_transaction(receipt)
+        TransactionsRepo.add_transaction(transaction)
         CartRepo.clear_cart(user_id)
 
-        return receipt
+        return {
+            "message": "Checkout complete — receipt emailed.",
+            "receipt_id": receipt_hash,
+            "total": order["total"],
+            "items": order["items"]
+        }

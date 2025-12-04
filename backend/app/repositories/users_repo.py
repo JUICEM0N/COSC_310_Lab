@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from backend.app.repositories.cart_repo import CartRepo
 
 DATA_PATH = Path(__file__).resolve().parents[1] / "data" / "users.json"
 
@@ -40,9 +41,14 @@ class UsersRepo:
         return None
 
     def add_user(user_data: dict):
+        # users = UsersRepo.load_users()
+        # users.append(user_data)
+        # UsersRepo.save_users(users)
         users = UsersRepo.load_users()
+
         users.append(user_data)
         UsersRepo.save_users(users)
+        CartRepo.create_cart_for_user(user_data["user_id"])
 
     def update_user(user_id: int, updated_data: dict):
         users = UsersRepo.load_users()

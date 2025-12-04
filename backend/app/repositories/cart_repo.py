@@ -108,3 +108,17 @@ class CartRepo:
         items = cart["items"]
         
         return any(i.get("product_id") == product_id for i in items)
+    
+    def create_cart_for_user(user_id: int):
+        carts = CartRepo.load_carts()
+
+        if any(c.get("user_id") == user_id for c in carts):
+            return
+
+        new_cart = {
+            "user_id": user_id,
+            "items": []
+        }
+
+        carts.append(new_cart)
+        CartRepo.save_carts(carts)
