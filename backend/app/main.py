@@ -4,7 +4,7 @@ load_dotenv()
 from fastapi import FastAPI
 from backend.app.routers import (
     users, items, cart, user_dashboard, auth,
-    transactions, admin, admin_dashboard
+    transactions, admin, admin_dashboard, wishlist
 )
 
 app = FastAPI()
@@ -17,6 +17,7 @@ app.include_router(auth.router)
 app.include_router(transactions.router)
 app.include_router(admin.router)
 app.include_router(admin_dashboard.router)
+app.include_router(wishlist.router)
 
 @app.get("/health")
 def health():

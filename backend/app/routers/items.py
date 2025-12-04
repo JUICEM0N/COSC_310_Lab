@@ -20,6 +20,24 @@ def get_items():
     """
     return ItemsService.list_items()
 
+@router.get("/items-light")
+def get_items_light():
+    items = ItemsService.list_items()
+
+    out = [
+        {
+            "product_id": it["product_id"],
+            "product_name": it["product_name"],
+            "price": it["discounted_price"],
+            "image": it["img_link"],
+            "description": it["about_product"].split("|")[0],
+            "category": it["category"],
+        }
+        for it in items
+    ]
+
+    return out
+
 #simple post the payload (is the body of the request)
 @router.post("", response_model=Item, status_code=201, summary="Creates a new item in our dataset")
 def post_item(payload: ItemCreate):

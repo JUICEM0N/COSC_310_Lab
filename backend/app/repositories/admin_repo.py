@@ -29,3 +29,28 @@ class AdminRepository:
     def save_penalties(self, data):
         with open(self.penalties_path, "w") as f:
             json.dump(data, f, indent=2)
+
+    def load_admins(self):
+        with open(self.admins_path, "r") as f:
+            return json.load(f)
+
+    def save_admins(self, data):
+        with open(self.admins_path, "w") as f:
+            json.dump(data, f, indent=2)
+
+    def load_products_of_week(self):
+        with open(self.products_of_week_path, "r") as f:
+            return json.load(f)
+
+    def save_products_of_week(self, product_ids):
+        with open(self.products_of_week_path, "w") as f:
+            json.dump(product_ids, f, indent=2)
+
+    def load_discounts(self):
+        with open(self.discounts_path, "r") as f:
+            return json.load(f)
+
+    def save_discounts(self, discounts):
+        #product_id = int, discount_percent = float
+        with open(self.discounts_path, "w") as f:
+            json.dump(discounts, f, indent=2)

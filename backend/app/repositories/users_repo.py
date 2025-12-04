@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from backend.app.repositories.cart_repo import CartRepo
+from backend.app.repositories.wishlist_repo import WishlistRepo
 
 DATA_PATH = Path(__file__).resolve().parents[1] / "data" / "users.json"
 
@@ -49,6 +50,7 @@ class UsersRepo:
         users.append(user_data)
         UsersRepo.save_users(users)
         CartRepo.create_cart_for_user(user_data["user_id"])
+        WishlistRepo.create_wishlist(user_data["user_id"])
 
     def update_user(user_id: int, updated_data: dict):
         users = UsersRepo.load_users()

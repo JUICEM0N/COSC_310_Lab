@@ -69,19 +69,25 @@ def test_save_all_overwrites_file_safely(temp_products_file):
 def mock_products(monkeypatch):
     data = [
         {
+            "product_id": "P1",
             "product_name": "Apple iPhone 13",
+            "actual_price": "$799.00",
             "discounted_price": "$799.00",
             "category": "Electronics|Mobile",
             "rating": "4.5"
         },
         {
+            "product_id": "P2",
             "product_name": "Samsung TV 55 Inch",
+            "actual_price": "$699.00",
             "discounted_price": "$699.00",
             "category": "Electronics|TV",
             "rating": "4.0"
         },
         {
+            "product_id": "P3",
             "product_name": "Juicer Mixer Grinder",
+            "actual_price": "$59.00",
             "discounted_price": "$59.00",
             "category": "Home|Kitchen",
             "rating": "|"
@@ -137,3 +143,40 @@ def test_filter_products_no_match(mock_products):
     with pytest.raises(Exception) as e:
         ProductsRepo.filter_products(keyword="xyz")
     assert "No products found matching the filter criteria." in str(e.value)
+
+def test_set_and_get_products_of_the_week(temp_products_file):
+    ProductsRepo.set_products_of_the_week(["P1", "P3"])
+    pow_list = ProductsRepo.get_products_of_the_week()
+    assert pow_list == ["P1", "P3"]
+
+def test_apply_discount_creates_entry(temp_products_file, mock_products):
+    import json
+    import builtins
+    original_load_all = ProductsRepo.load_all
+    original_save_all = ProductsRepo.save_all
+    ProductsRepo.load_all = lambda: mock_products.copy()
+    ProductsRepo.save_all = lambda items: temp_products_file.write_text(json.dumps(items))
+    
+    result = ProductsRepo.apply_discount("P1", 20)
+    assert result is True
+
+    data = read_json(temp_products_file)
+    for p in data:
+        if p["product_id"] == "P1":
+            assert float(p["discount_percentage"]) == 20.0
+            assert "$" in p["discounted_price"]
+
+def test_remove_discount_removes_entry(temp_products_file, mock_products):
+    ProductsRepo.save_all(mock_products)
+    ProductsRepo.save_discounts([{"product_id": "P1", "discount_percent": 20}])
+
+    result = ProductsRepo.remove_discount("P1")
+    assert result is True
+
+    data = read_json(temp_products_file)
+    for p in data:
+        assert "discount_percentage" not in p
+        assert "discounted_price" not in p
+
+    discounts = ProductsRepo.load_discounts()
+    assert all(d["product_id"] != "P1" for d in discounts)
