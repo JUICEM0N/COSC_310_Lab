@@ -1,0 +1,156 @@
+.product-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background: white;
+    width: 250px;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.product-img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.product-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.product-desc {
+    font-size: 0.85rem;
+    color: #555;
+    height: 40px;
+    overflow: hidden;
+}
+
+.product-bottom {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-price {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ff9900;
+}
+
+.add-to-cart-btn,
+.add-to-cart {
+    padding: 6px 12px;
+    background: #ff9900;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.add-to-cart-btn:hover,
+.add-to-cart:hover {
+    background: #e68900;
+}
+
+.add-to-cart:active {
+    background-color: #e07a00;
+    transform: scale(0.97);
+}
+
+.add-to-cart:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.expanded-card {
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.actual-price {
+    text-decoration: line-through;
+    color: #777;
+    margin-left: 6px;
+}
+
+.discount {
+    color: #ff6600;
+    margin-left: 4px;
+}
+
+.rating-line {
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+.category-line {
+    margin: 10px 0;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.about-section ul {
+    padding-left: 20px;
+    margin-top: 6px;
+}
+
+.review-block {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f7f7f7;
+    border-radius: 8px;
+}
+
+.review-title {
+    margin: 0;
+}
+
+.review-content {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.review-user {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.product-link-wrapper {
+    margin-top: 15px;
+}
+
+.product-link {
+    color: #0070f3;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.stock-line {
+    margin-top: 10px;
+    font-size: 1rem;
+}

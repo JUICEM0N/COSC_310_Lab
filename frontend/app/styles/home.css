@@ -1,0 +1,33 @@
+.main-container {
+    background-color: #fafafa;
+    min-height: 100vh;
+}
+
+.content {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 1.1rem;
+    color: #444;
+}
+
+.feature-card {
+    margin-top: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+}
+
+.feature-card h2 {
+    margin-bottom: 12px;
+}
