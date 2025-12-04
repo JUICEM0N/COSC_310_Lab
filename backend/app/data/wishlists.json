@@ -6,5 +6,11 @@
     "shared_with": [
       "wrongpass"
     ]
+  },
+  {
+    "user_id": 4,
+    "items": [],
+    "public": false,
+    "shared_with": []
   }
 ]

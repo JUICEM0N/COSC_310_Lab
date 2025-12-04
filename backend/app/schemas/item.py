@@ -1,12 +1,13 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class Item(BaseModel):
     product_id: str
     product_name: str
     category: str
-    discounted_price: str
+    discounted_price: Optional[str] = None
     actual_price: str
-    discount_percentage: str
+    discount_percentage: Optional[str] = None
     rating: str
     rating_count: str
     about_product: str

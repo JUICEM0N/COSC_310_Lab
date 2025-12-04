@@ -7,12 +7,28 @@
         "isAdmin": true,
         "createdAt": "2025-01-01"
     },
-    {    
+    {
         "user_id": 4,
         "username": "wrongpass",
         "password": "$2b$12$EFe99vlKkS2JFb4kKA34oeGONZyVkaF5Nb.zu8p7LHjVi04TdNtry",
         "email": "wrong@test.com",
         "isAdmin": false,
         "createdAt": "2025-01-01"
+    },
+    {
+        "user_id": 3,
+        "username": "test1",
+        "password": "$2b$12$tpbOw8gPxOGIZxia2CHhxu62tulnG/igPSNFy337Ffx3Ga4m51V1e",
+        "email": "test1@email.com",
+        "isAdmin": false,
+        "createdAt": "2025-12-03T23:55:25.078845"
+    },
+    {
+        "user_id": 4,
+        "username": "test2",
+        "password": "$2b$12$QZl/ppPbIeJnk6JVI5Te2.U8OTGprLl1MUwyWX2rXyhBGxSnPlzBq",
+        "email": "test2@email.com",
+        "isAdmin": false,
+        "createdAt": "2025-12-04T00:01:34.203369"
     }
 ]

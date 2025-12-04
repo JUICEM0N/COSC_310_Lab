@@ -32,13 +32,17 @@ class WishlistRepo:
 
     @staticmethod
     def create_wishlist(user_id: int, public: bool = False) -> Dict[str, Any]:
+        wishlists = WishlistRepo.load_all()
+        
+        if any(w.get("user_id") == user_id for w in wishlists):
+            return
+        
         wishlist = {
             "user_id": user_id,
             "items": [],
             "public": public,
             "shared_with": []
         }
-        wishlists = WishlistRepo.load_all()
         wishlists.append(wishlist)
         WishlistRepo.save_all(wishlists)
         return wishlist
