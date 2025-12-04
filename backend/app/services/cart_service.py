@@ -16,6 +16,20 @@ class CartService:
     
     def add_item(user_id: int, product_id: str, quantity: int = 1):
         CartService.validate_items(user_id, product_id, quantity)
+        
+        product = ProductsRepo.get_products(product_id)
+        available_stock = int(product.get("quantity", 0))
+        
+        cart = CartRepo.get_cart(user_id)
+        current_qty = 0
+        if cart:
+            existing_item = next((i for i in cart["items"] if i["product_id"] == product_id), None)
+            if existing_item:
+                current_qty = existing_item["quantity"]
+        
+        if current_qty + quantity > available_stock:
+            raise HTTPException(status_code=400, detail=f"Insufficient stock. Only {available_stock} available.")
+
         CartRepo.add_item(user_id, product_id, quantity)
 
     def update_quantity(user_id: int, product_id: str, quantity: int):
@@ -23,6 +37,12 @@ class CartService:
 
         if not CartRepo.item_in_cart(user_id, product_id):
             raise HTTPException(status_code=404, detail=f"Item not found in cart: {product_id}")
+        
+        product = ProductsRepo.get_products(product_id)
+        available_stock = int(product.get("quantity", 0))
+        
+        if quantity > available_stock:
+            raise HTTPException(status_code=400, detail=f"Insufficient stock. Only {available_stock} available.")
         
         CartRepo.update_quantity(user_id, product_id, quantity)
 
