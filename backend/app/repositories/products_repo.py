@@ -200,6 +200,7 @@ class ProductsRepo:
             discounts = [d for d in discounts if d.get("product_id") != product_id]
             ProductsRepo.save_discounts(discounts)
         return updated
+        return updated
 
     @staticmethod
     def update_stock(product_id: str, quantity_change: int) -> bool:
