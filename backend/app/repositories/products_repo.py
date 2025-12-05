@@ -201,3 +201,26 @@ class ProductsRepo:
             ProductsRepo.save_discounts(discounts)
         return updated
 
+    @staticmethod
+    def update_stock(product_id: str, quantity_change: int) -> bool:
+        """
+        Updates the stock/inventory for a product.
+        quantity_change: positive number to add stock, negative to subtract (on purchase).
+        Returns True if product found and updated, False otherwise.
+        """
+        items = ProductsRepo.load_all()
+        updated = False
+
+        for it in items:
+            if it.get("product_id") == product_id:
+                current_stock = int(it.get("quantity", 0)) if it.get("quantity") else 0
+                new_stock = max(0, current_stock + quantity_change)
+                it["quantity"] = new_stock
+                updated = True
+                break
+
+        if updated:
+            ProductsRepo.save_all(items)
+
+        return updated
+
