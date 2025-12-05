@@ -1,3 +1,5 @@
+import "./globals.css";
+
 export const metadata = {
   title: 'Bitcoin Miner',
   description: 'An e-commerce site by StackSquad',

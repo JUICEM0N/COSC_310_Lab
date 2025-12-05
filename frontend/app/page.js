@@ -3,8 +3,8 @@
 import "./globals.css";
 
 import { useState } from "react";
-import Image from "next/image";
 import ProductCard from "./products/ProductCard";
+import Navigation from "./components/Navigation";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -57,7 +57,7 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/items/search/filter?${params.toString()}`
+        `http://localhost:8000/items/search/filter?${params.toString()}`
       );
 
       if (!res.ok) {
@@ -78,40 +78,11 @@ export default function Home() {
   return (
     <main className="main-container">
 
-      <nav className="navbar">
-        <div className="nav-left">
-          <a href="/">
-            <Image 
-              src="/logo-new.png"
-              alt="Site Logo"
-              width={150}
-              height={70}
-              className="nav-logo"
-            />
-          </a>
-        </div>
-
-        <div className="nav-center">
-          <input 
-            type="text"
-            placeholder="Search products"
-            className="search-bar"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={submitSearch}
-          />
-        </div>
-
-        <div className="nav-right">
-          <a href="/cart">
-            <img src="/cart.svg" alt="Cart" className="cart-img" />
-          </a>
-
-          <a href="/dashboard">
-            <img src="/profile-icon.svg" alt="Profile" className="profile-img" />
-          </a>
-        </div>
-      </nav>
+      <Navigation
+        search={search}
+        setSearch={setSearch}
+        submitSearch={submitSearch}
+      />
 
       {results.length > 0 && (
         <div className="filter-bar">
