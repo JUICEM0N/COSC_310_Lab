@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
-import Link from "next/link";
+import Navigation from "../../components/Navigation";
+import "../../styles/login.css";
 
 export default function ChangePasswordPage() {
   const router = useRouter();
@@ -74,85 +75,58 @@ export default function ChangePasswordPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-          Change Password
-        </h1>
+    <>
+      <Navigation showOnAuth={true} />
+      <main className="login-container">
+        <div className="login-card">
+          <h1 className="login-title">Change Password</h1>
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
+          {error && <div className="login-error">{error}</div>}
+          {success && <div className="login-success">{success}</div>}
 
-        {success && (
-          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-4">
-            {success}
-          </div>
-        )}
+          <form onSubmit={handleSubmit} className="login-form">
+            <div>
+              <label className="login-label">Current Password</label>
+              <input
+                type="password"
+                name="old_password"
+                className="login-input"
+                value={formData.old_password}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Current Password
-            </label>
-            <input
-              type="password"
-              name="old_password"
-              value={formData.old_password}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              placeholder="Enter current password"
-            />
-          </div>
+            <div>
+              <label className="login-label">New Password</label>
+              <input
+                type="password"
+                name="new_password"
+                className="login-input"
+                value={formData.new_password}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              New Password
-            </label>
-            <input
-              type="password"
-              name="new_password"
-              value={formData.new_password}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              placeholder="Enter new password"
-            />
-          </div>
+            <div>
+              <label className="login-label">Confirm New Password</label>
+              <input
+                type="password"
+                name="confirm_password"
+                className="login-input"
+                value={formData.confirm_password}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Confirm New Password
-            </label>
-            <input
-              type="password"
-              name="confirm_password"
-              value={formData.confirm_password}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              placeholder="Confirm new password"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
-          >
-            {loading ? "Updating..." : "Change Password"}
-          </button>
-        </form>
-
-        <p className="text-center text-gray-600 mt-6">
-          <Link href="/dashboard" className="text-indigo-600 hover:underline">
-            Back to Dashboard
-          </Link>
-        </p>
-      </div>
-    </main>
+            <button type="submit" className="login-btn" disabled={loading}>
+              {loading ? "Changing..." : "Change Password"}
+            </button>
+          </form>
+        </div>
+      </main>
+    </>
   );
 }
