@@ -1,19 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-export default function Navigation() {
+export default function Navigation({ search, setSearch, submitSearch, showOnAuth = false }) {
   const pathname = usePathname();
   const router = useRouter();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
-    
+
     if (token && user) {
       setIsLoggedIn(true);
       try {
@@ -33,64 +35,59 @@ export default function Navigation() {
     router.push("/auth/login");
   };
 
-  // Don't show navigation on auth pages
-  if (pathname?.startsWith("/auth")) {
-    return null;
-  }
+  if (!showOnAuth && pathname?.startsWith("/auth")) return null;
 
   return (
     <nav className="navbar">
       <div className="nav-left">
-        <Link href="/">
-          <img
+        <a href="/">
+          <Image
             src="/logo-new.png"
             alt="Site Logo"
             width={150}
             height={70}
             className="nav-logo"
           />
-        </Link>
+        </a>
       </div>
 
       <div className="nav-center">
         <input
           type="text"
-          placeholder="Search products…"
+          placeholder="Search products"
           className="search-bar"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={submitSearch}
         />
       </div>
 
       <div className="nav-right">
-        <Link href="/" className="nav-link">
-          Home
-        </Link>
-
         {isLoggedIn ? (
           <>
             <Link href="/dashboard" className="nav-link">
               Dashboard
             </Link>
 
-            <Link href="/checkout" className="nav-cart">
-              <img
-                src="/cart.svg"
-                alt="Cart"
-                className="cart-img"
-              />
+            <Link href="/cart">
+              <img src="/cart.svg" alt="Cart" className="cart-img" />
             </Link>
 
             <div className="nav-profile">
-              <span style={{ marginRight: '10px', fontWeight: '500' }}>Hi, {username}</span>
+              <span style={{ marginRight: "10px", fontWeight: "500" }}>
+                Hi, {username}
+              </span>
+
               <button
                 onClick={handleLogout}
                 style={{
-                  background: '#ff4444',
-                  color: 'white',
-                  border: 'none',
-                  padding: '8px 16px',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold'
+                  background: "#ff4444",
+                  color: "white",
+                  border: "none",
+                  padding: "8px 16px",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontWeight: "bold"
                 }}
               >
                 Logout
@@ -102,15 +99,17 @@ export default function Navigation() {
             <Link href="/auth/login" className="nav-link">
               Login
             </Link>
+
             <Link
               href="/auth/register"
               style={{
-                background: '#ff9900',
-                color: 'white',
-                textDecoration: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                fontWeight: 'bold'
+                background: "#ff9900",
+                color: "white",
+                textDecoration: "none",
+                padding: "8px 16px",
+                borderRadius: "4px",
+                fontWeight: "bold",
+                marginLeft: "10px"
               }}
             >
               Register

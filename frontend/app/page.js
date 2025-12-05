@@ -1,14 +1,10 @@
 "use client";
 
 import "./globals.css";
-import "./styles/home.css";
-import "./styles/navbar.css";
-import "./styles/search.css";
-import "./styles/ProductCard.css";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import ProductCard from "./products/ProductCard";
+import Navigation from "./components/Navigation";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -20,28 +16,13 @@ export default function Home() {
   const [category, setCategory] = useState("");
   const [minRating, setMinRating] = useState("");
 
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/`);
-        const data = await res.json();
-        setProducts(data);
-        setResults(data);
-      } catch (err) {
-        console.error("Failed to fetch products:", err);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
   const submitSearch = async (e) => {
     if (e.key !== "Enter") return;
 
+    console.log("SubmitSearch TRIGGERED");
+
     if (!search.trim()) {
-      setResults(products);
+      setResults([]);
       return;
     }
 
@@ -49,12 +30,12 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/items/search?keyword=${encodeURIComponent(
-          search
-        )}`
+        `http://localhost:8000/items/search?keyword=${encodeURIComponent(search)}`
       );
 
       const data = await res.json();
+      console.log("SEARCH RESULTS RAW:", data);
+
       setResults(data);
     } catch (err) {
       console.error("Search failed:", err);
@@ -64,6 +45,8 @@ export default function Home() {
   };
 
   async function ApplyFilters() {
+    console.log("ApplyFilters TRIGGERED");
+
     const params = new URLSearchParams();
 
     if (search) params.append("keyword", search);
@@ -74,15 +57,18 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/items/search/filter?${params.toString()}`
+        `http://localhost:8000/items/search/filter?${params.toString()}`
       );
 
       if (!res.ok) {
+        console.error("FILTER ERROR", res.status);
         setResults([]);
         return;
       }
 
       const data = await res.json();
+      console.log("FILTER RESULTS RAW:", data);
+
       setResults(data);
     } catch (err) {
       console.error("Filter failed:", err);
@@ -90,73 +76,88 @@ export default function Home() {
   }
 
   return (
-    <main className="home-container">
-      <div className="filters-sidebar">
-        <h2>Filters</h2>
+    <main className="main-container">
 
-        <div className="filter-group">
-          <label>Price Range</label>
+      <Navigation
+        search={search}
+        setSearch={setSearch}
+        submitSearch={submitSearch}
+      />
+
+      {results.length > 0 && (
+        <div className="filter-bar">
           <input
             type="number"
-            placeholder="Min"
+            placeholder="Min Price"
+            className="filter-input"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
           />
+
           <input
             type="number"
-            placeholder="Max"
+            placeholder="Max Price"
+            className="filter-input"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
           />
-        </div>
 
-        <div className="filter-group">
-          <label>Category</label>
-          <select
+          <input
+            type="text"
+            placeholder="Category"
+            className="filter-input"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="">All</option>
-            <option value="electronics">Electronics</option>
-            <option value="fashion">Fashion</option>
-            <option value="home">Home</option>
-            <option value="books">Books</option>
-            <option value="sports">Sports</option>
-          </select>
-        </div>
+          />
 
-        <div className="filter-group">
-          <label>Minimum Rating</label>
-          <select
+          <input
+            type="number"
+            step="0.1"
+            placeholder="Min Rating"
+            className="filter-input"
             value={minRating}
             onChange={(e) => setMinRating(e.target.value)}
-          >
-            <option value="">Any</option>
-            <option value="4">4 Stars & Up</option>
-            <option value="3">3 Stars & Up</option>
-            <option value="2">2 Stars & Up</option>
-            <option value="1">1 Star & Up</option>
-          </select>
+          />
+
+          <button className="filter-btn" onClick={ApplyFilters}>
+            Apply Filters
+          </button>
         </div>
+      )}
 
-        <button onClick={ApplyFilters} className="apply-filters-btn">
-          Apply Filters
-        </button>
-      </div>
-
-      <div className="products-main-content">
-        <div className="products-grid">
-          {searching ? (
-            <p>Searching...</p>
-          ) : results.length > 0 ? (
-            results.map((product, index) => (
-              <ProductCard key={`${product.product_id}-${index}`} item={product} />
-            ))
-          ) : (
-            <p>No products found.</p>
+      {search.length > 0 && (
+        <div className="search-results">
+          {!searching && results.length === 0 && (
+            <p>No results found.</p>
           )}
+
+          <div className="product-grid">
+            {Array.isArray(results) && results.length > 0 ? (
+              results.map((item) => {
+                if (!item || !item.product_id) {
+                  console.warn("Invalid item skipped:", item);
+                  return null;
+                }
+                return <ProductCard key={item.product_id} item={item} />;
+              })
+            ) : (
+              <p className="no-results">No products to display.</p>
+            )}
+          </div>
         </div>
-      </div>
+      )}
+
+      {search.length === 0 && (
+        <section className="content">
+          <h1>Welcome to Not Amazon</h1>
+          <p>Your all-in-one shopping platform — created by StackSquad</p>
+
+          <div className="feature-card">
+            <h2>Featured Products</h2>
+            <p>Product grid coming soon.</p>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
