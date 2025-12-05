@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional
 from backend.app.repositories.users_repo import UsersRepo
 from backend.app.schemas.user import User, UserCreate
+from backend.app.utils.auth import create_access_token
 
 class AuthService:
     def create_user(self, user_data: UserCreate) -> User:
@@ -23,10 +24,11 @@ class AuthService:
         UsersRepo.add_user(new_user.model_dump())
         return new_user
     
-    def login(self, email: str, password: str) -> Optional[User]:
+    def login(self, email: str, password: str) -> Optional[dict]:
         user_dict = UsersRepo.get_user_by_email(email)
         if user_dict and checkpw(password.encode('utf-8'), user_dict["password"].encode('utf-8')):
-            return User(**user_dict)
+            token = create_access_token(user_dict["user_id"])
+            return {"access_token": token, "user": User(**user_dict)}
         return None
     
     def change_password(self, user_id: int, old_password: str, new_password: str):
