@@ -1,4 +1,5 @@
-import crypt
+import hashlib
+import secrets
 import requests
 from datetime import datetime
 from backend.app.repositories.users_repo import UsersRepo
@@ -90,11 +91,10 @@ class ReceiptService:
 
     def generate_receipt_hash(order: dict) -> str:
         raw = f"{order['user_id']}{order['total']}{order['timestamp']}"
-        salt = crypt.mksalt(crypt.METHOD_SHA512)
-        hashed = crypt.crypt(raw, salt)
-
-        cleaned = hashed.replace("/", "").replace(".", "").replace("$", "")
-        return cleaned[:32]
+        salt = secrets.token_hex(16)
+        hashed = hashlib.sha512((raw + salt).encode()).hexdigest()
+        
+        return hashed[:32]
 
     def generate_html_receipt(order: dict, receipt_id: str) -> str:
         rows = ""
