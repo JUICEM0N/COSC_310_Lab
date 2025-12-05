@@ -15,24 +15,30 @@ export default function DashboardPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const savedUser = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
+  const savedUser = localStorage.getItem("user");
 
-    if (!token || !savedUser) {
-      router.push("/auth/login");
+  if (!token || !savedUser) {
+    router.push("/auth/login");
+    return;
+  }
+
+  try {
+    const userData = JSON.parse(savedUser);
+
+    if (userData.isAdmin) {
+      router.push("/admin-dashboard"); // redirect admins
       return;
     }
 
-    try {
-      const userData = JSON.parse(savedUser);
-      setUser(userData);
-      // Use user_id from backend schema
-      loadDashboardData(userData.user_id || userData.id);
-    } catch (err) {
-      console.error("Error loading user data:", err);
-      router.push("/auth/login");
-    }
-  }, [router]);
+    setUser(userData);
+    loadDashboardData(userData.user_id || userData.id);
+  } catch (err) {
+    console.error("Error parsing user data:", err);
+    router.push("/auth/login");
+  }
+}, [router]);
+
 
   const loadDashboardData = async (userId) => {
     try {
