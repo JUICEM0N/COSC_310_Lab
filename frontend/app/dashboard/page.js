@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 import Link from "next/link";
+import Navigation from "../components/Navigation";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -71,6 +72,9 @@ export default function DashboardPage() {
   }
 
   return (
+   <>
+    <Navigation showOnAuth={true} />
+
     <main className="main-container">
       <div className="content">
         {/* Header */}
@@ -423,5 +427,6 @@ export default function DashboardPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }

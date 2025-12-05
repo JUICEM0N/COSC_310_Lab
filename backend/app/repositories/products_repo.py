@@ -199,9 +199,7 @@ class ProductsRepo:
             discounts = ProductsRepo.load_discounts()
             discounts = [d for d in discounts if d.get("product_id") != product_id]
             ProductsRepo.save_discounts(discounts)
-<<<<<<< HEAD
         return updated
-=======
         return updated
 
     @staticmethod
@@ -227,4 +225,3 @@ class ProductsRepo:
 
         return updated
 
->>>>>>> d141b9c1e1e986981f30465a612b1959cf6da19f
