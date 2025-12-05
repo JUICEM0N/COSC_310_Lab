@@ -5,5 +5,7 @@ pytest
 pytest-cov
 pydantic
 bcrypt
+python-jose[cryptography]
 python-dotenv
+stripe
 requests
