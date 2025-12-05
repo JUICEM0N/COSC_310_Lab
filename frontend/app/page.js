@@ -30,7 +30,7 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/items/search?keyword=${encodeURIComponent(search)}`
+        `http://localhost:8000/items/search?keyword=${encodeURIComponent(search)}`
       );
 
       const data = await res.json();
@@ -94,7 +94,7 @@ export default function Home() {
         <div className="nav-center">
           <input 
             type="text"
-            placeholder="Search products…"
+            placeholder="Search products"
             className="search-bar"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -183,11 +183,10 @@ export default function Home() {
 
           <div className="feature-card">
             <h2>Featured Products</h2>
-            <p>Product grid coming soon…</p>
+            <p>Product grid coming soon.</p>
           </div>
         </section>
       )}
-
     </main>
   );
 }

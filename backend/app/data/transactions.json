@@ -227,5 +227,29 @@
         "subtotal": 958.37,
         "tax": 115.0,
         "total_amount": 1073.37
+    },
+    {
+        "id": "6bdYTzeT5ZvRnMwCBTFdoWzHHgycV2cM",
+        "user_id": 3,
+        "date": "2025-12-04",
+        "status": "completed",
+        "products": [
+            {
+                "product_id": "B009P2LIL4",
+                "name": "Bajaj Majesty RX10 2000 Watts Heat Convector Room Heater (White, ISI Approved)",
+                "quantity": 5,
+                "price_per_unit": 35.5,
+                "subtotal": 177.5,
+                "actual_price": "$49.28",
+                "discount": "28%",
+                "category": "Home&Kitchen|Heating,Cooling&AirQuality|RoomHeaters|HeatConvectors",
+                "rating": "3.6",
+                "rating_count": "468",
+                "image": null
+            }
+        ],
+        "subtotal": 177.5,
+        "tax": 21.3,
+        "total_amount": 198.8
     }
 ]
