@@ -29,4 +29,3 @@ class TransactionsRepo:
     def user_has_transactions(user_id: int) -> bool:
         transactions = TransactionsRepo.load_transactions()
         return any(t.get("user_id") == user_id for t in transactions)
-    

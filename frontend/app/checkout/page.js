@@ -126,10 +126,12 @@ export default function CheckoutPage() {
     localStorage.removeItem("payment_intent_id");
     setCart([]);
     setShowPaymentForm(false);
+
+    
     
     alert("Payment successful! Your order has been placed.");
     
-    router.push("/dashboard");
+    router.push("/");
   };
 
   const handlePaymentError = (error) => {

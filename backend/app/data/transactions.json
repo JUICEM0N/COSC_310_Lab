@@ -373,5 +373,97 @@
         ],
         "status": "pending",
         "timestamp": "2025-12-05T06:55:46.560325"
+    },
+    {
+        "user_id": 5,
+        "amount": 35.82,
+        "currency": "cad",
+        "items": [
+            {
+                "product_id": "B00HVXS7WC",
+                "name": "Bajaj Rex 500W Mixer Grinder with Nutri-Pro Feature, 3 Jars, White",
+                "quantity": 1,
+                "price_per_unit": 31.98,
+                "subtotal": 31.98,
+                "actual_price": 51.36,
+                "discount": "38%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4.2",
+                "rating_count": "41,349",
+                "image": "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/31rucE-db2L._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "status": "pending",
+        "timestamp": "2025-12-05T07:06:39.602887"
+    },
+    {
+        "user_id": 5,
+        "amount": 35.82,
+        "currency": "cad",
+        "items": [
+            {
+                "product_id": "B00HVXS7WC",
+                "name": "Bajaj Rex 500W Mixer Grinder with Nutri-Pro Feature, 3 Jars, White",
+                "quantity": 1,
+                "price_per_unit": 31.98,
+                "subtotal": 31.98,
+                "actual_price": 51.36,
+                "discount": "38%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4.2",
+                "rating_count": "41,349",
+                "image": "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/31rucE-db2L._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "status": "pending",
+        "timestamp": "2025-12-05T07:09:47.318375"
+    },
+    {
+        "user_id": 5,
+        "amount": 35.82,
+        "currency": "cad",
+        "items": [
+            {
+                "product_id": "B00HVXS7WC",
+                "name": "Bajaj Rex 500W Mixer Grinder with Nutri-Pro Feature, 3 Jars, White",
+                "quantity": 1,
+                "price_per_unit": 31.98,
+                "subtotal": 31.98,
+                "actual_price": 51.36,
+                "discount": "38%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4.2",
+                "rating_count": "41,349",
+                "image": "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/31rucE-db2L._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "status": "completed",
+        "timestamp": "2025-12-05T07:14:31.612364",
+        "transaction_id": "9ffa14d9-d3f0-4bd7-94b3-7cc8e3b6729b",
+        "payment_intent_id": "pi_3SatDnB3rkqRl6gN1DBrg0TB"
+    },
+    {
+        "user_id": 5,
+        "amount": 35.82,
+        "currency": "cad",
+        "items": [
+            {
+                "product_id": "B00HVXS7WC",
+                "name": "Bajaj Rex 500W Mixer Grinder with Nutri-Pro Feature, 3 Jars, White",
+                "quantity": 1,
+                "price_per_unit": 31.98,
+                "subtotal": 31.98,
+                "actual_price": 51.36,
+                "discount": "38%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4.2",
+                "rating_count": "41,349",
+                "image": "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/31rucE-db2L._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "status": "completed",
+        "timestamp": "2025-12-05T07:23:45.012934",
+        "transaction_id": "0524f750-a957-4ffc-a90e-c5f0fb6fcd9f",
+        "payment_intent_id": "pi_3SatMjB3rkqRl6gN0FWA2MSO"
     }
 ]

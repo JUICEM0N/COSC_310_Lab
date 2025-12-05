@@ -200,4 +200,3 @@ class ProductsRepo:
             discounts = [d for d in discounts if d.get("product_id") != product_id]
             ProductsRepo.save_discounts(discounts)
         return updated
-

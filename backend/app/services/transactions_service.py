@@ -208,7 +208,7 @@ class TransactionsService:
             for item in transaction["items"]:
                 ProductsRepo.update_stock(item["product_id"], item["quantity"])
         return refund
-         
+
     #fallback for checkout without stripe
     def checkout(user_id: int):
         if not CartRepo.cart_exists(user_id):
