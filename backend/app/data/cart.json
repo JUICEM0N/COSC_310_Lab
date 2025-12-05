@@ -2,5 +2,26 @@
     {
         "user_id": 3,
         "items": []
+    },
+    {
+        "user_id": 5,
+        "items": [
+            {
+                "product_id": "B00HVXS7WC",
+                "quantity": 1
+            },
+            {
+                "product_id": "B01GZSQJPA",
+                "quantity": 1
+            },
+            {
+                "product_id": "B00W56GLOQ",
+                "quantity": 1
+            },
+            {
+                "product_id": "B07DGD4Z4C",
+                "quantity": 1
+            }
+        ]
     }
 ]

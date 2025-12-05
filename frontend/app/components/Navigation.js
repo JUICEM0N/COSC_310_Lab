@@ -69,7 +69,7 @@ export default function Navigation({ search, setSearch, submitSearch, showOnAuth
               Dashboard
             </Link>
 
-            <Link href="/cart">
+            <Link href="/checkout">
               <img src="/cart.svg" alt="Cart" className="cart-img" />
             </Link>
 
