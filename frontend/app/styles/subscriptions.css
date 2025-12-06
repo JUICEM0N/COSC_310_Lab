@@ -1,0 +1,68 @@
+.subs-container {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.subs-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #333;
+    text-align: center;
+}
+
+.subs-loading,
+.subs-empty {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-top: 40px;
+}
+
+.subs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.subs-card {
+    background: white;
+    padding: 22px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.subs-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.subs-label {
+    font-weight: 600;
+    color: #555;
+}
+
+
+.subs-value {
+    color: #333;
+}
+
+.subs-status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.subs-active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.subs-inactive {
+    background: #f3f4f6;
+    color: #374151;
+}
