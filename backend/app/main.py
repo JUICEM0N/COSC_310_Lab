@@ -5,7 +5,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.app.routers import (
     users, items, cart, user_dashboard, auth,
-    transactions, admin, admin_dashboard, wishlist
+    transactions, admin, admin_dashboard, wishlist, 
+    subscriptions
 )
 
 app = FastAPI()
@@ -27,6 +28,7 @@ app.include_router(transactions.router)
 app.include_router(admin.router)
 app.include_router(admin_dashboard.router)
 app.include_router(wishlist.router)
+app.include_router(subscriptions.router)
 
 @app.get("/health")
 def health():

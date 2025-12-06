@@ -120,3 +120,27 @@ class ItemsService:
                 return item
 
         raise HTTPException(status_code=404, detail=f"Item '{item_id}' not found")
+
+    def build_transaction_item(product: Item, quantity: int = 1) -> dict:
+        actual_price = product.actual_price
+        discount_percentage = product.discount_percentage or 0
+
+        discounted_price = actual_price
+        if discount_percentage:
+            discounted_price = actual_price - (actual_price * (discount_percentage / 100))
+
+        subtotal = discounted_price * quantity
+
+        return {
+            "product_id": product.product_id,
+            "name": product.product_name,
+            "quantity": quantity,
+            "price_per_unit": discounted_price,
+            "subtotal": subtotal,
+            "actual_price": actual_price,
+            "discount": product.discount_percentage,
+            "category": product.category,
+            "rating": product.rating,
+            "rating_count": product.rating_count,
+            "image": product.img_link
+        }

@@ -465,5 +465,29 @@
         "timestamp": "2025-12-05T07:23:45.012934",
         "transaction_id": "0524f750-a957-4ffc-a90e-c5f0fb6fcd9f",
         "payment_intent_id": "pi_3SatMjB3rkqRl6gN0FWA2MSO"
+    },
+    {
+        "user_id": 5,
+        "amount": 23.12,
+        "currency": "cad",
+        "items": [
+            {
+                "product_id": "B08KDBLMQP",
+                "name": "Croma 500W Mixer Grinder with 3 Stainless Steel Leak-proof Jars, 3 speed & Pulse function, 2 years warranty (CRAK4184, White & Purple)",
+                "quantity": 1,
+                "price_per_unit": 20.64,
+                "subtotal": 20.64,
+                "actual_price": 40.0,
+                "discount": "48%",
+                "category": "Home&Kitchen|Kitchen&HomeAppliances|SmallKitchenAppliances|MixerGrinders",
+                "rating": "4",
+                "rating_count": "6,530",
+                "image": "https://m.media-amazon.com/images/I/41i1uzCEyWL._SX300_SY300_QL70_FMwebp_.jpg"
+            }
+        ],
+        "status": "completed",
+        "timestamp": "2025-12-05T07:48:35.884543",
+        "transaction_id": "cfe938a0-26f9-47ba-b8f2-17d251bd6ec9",
+        "payment_intent_id": "pi_3SatkmB3rkqRl6gN0fVGmgle"
     }
 ]

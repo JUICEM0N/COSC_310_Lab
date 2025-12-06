@@ -225,3 +225,9 @@ class ProductsRepo:
 
         return updated
 
+def get_product_by_id(item_id: int):
+    products = ProductsRepo.load_products()
+    for product in products:
+        if product["product_id"] == item_id:
+            return product
+    return None

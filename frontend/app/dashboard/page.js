@@ -72,7 +72,7 @@ export default function DashboardPage() {
   }
 
   return (
-   <>
+    <>
     <Navigation showOnAuth={true} />
 
     <main className="main-container">
@@ -152,6 +152,31 @@ export default function DashboardPage() {
               View Cart
             </h3>
             <p style={{ margin: 0, color: "#15803d" }}>Check your cart</p>
+          </Link>
+
+          <Link
+            href="/dashboard/subscriptions"
+            style={{
+              background: "#fff7ed",
+              border: "1px solid #fed7aa",
+              padding: "20px",
+              borderRadius: "8px",
+              textDecoration: "none",
+              textAlign: "center",
+              transition: "transform 0.2s",
+            }}
+          >
+            <h3
+              style={{
+                margin: "0 0 5px 0",
+                color: "#c2410c",
+                fontSize: "1.25rem",
+                fontWeight: "600"
+              }}
+            >
+              Recurring Purchases
+            </h3>
+            <p style={{ margin: 0, color: "#9a3412" }}>Manage subscriptions</p>
           </Link>
 
           <Link
